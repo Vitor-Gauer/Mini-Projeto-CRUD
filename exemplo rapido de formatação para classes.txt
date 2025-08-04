@@ -1,0 +1,79 @@
+unit uTrabalhador;
+
+interface
+
+  Type TTrabalhador = class(TObject)
+  protected
+    Trabalhando:Boolean;
+    Nome:String;
+    Cargo:String;
+    HorarioEntrada:Double;
+    HorarioSaida:Double;
+    Salario:Currency;
+    procedure EncerrarExpediente;
+    procedure IniciarExpediente;
+  public
+    function getNome:String;
+    procedure setNome(aNome:String);
+    function getCargo:String;
+    procedure setCargo(aCargo:String);
+    constructor Create(aNome:String);
+    procedure ExecutarFuncao; virtual;
+  end;
+
+implementation
+
+//---------------------------------------------------\\ ↑ + ↓
+
+unit uJaguara;
+
+interface
+
+uses uTrabalhador, System.SysUtils, FMX.Dialogs;
+
+  type TJaguara = class(TTrabalhador)
+  private
+    procedure FicarDeVarzea;
+  public
+    procedure ExecutarFuncao; override;
+  end;
+
+implementation
+
+\\ ================================ //
+
+Disciplinas contem professores e turmas
+
+Turmas tem estudantes e matriculas
+
+"nessa turma tem esse professor para essa disciplina"
+
+"disciplina só pode ser dada por tais professores"
+
+"Estudantes tem que saber suas turmas"	
+
+"Matricula"
+
+\\ ====================== //
+
+Sistema pede nome do estudante a cadastrar:
+
+Nome: "Plinio"
+
+Sistema atribui um código/matricula ao estudante (neste formato: C2025010001 significando C ou M para código ou matricula, 2025 para o ano atual, 01 para semestre, se antes de julho: 01, se depois ou igual a julho: 02, aluno 0001) 
+
+Sistema pede qual disciplina o estudante vai fazer(varias opções):
+
+Disciplina:"Informatica basica"
+
+Sistema pede qual professor gostaria de fazer com (varias opções, desde que eles estejam liberados na disciplina em poder lecionar aquela disciplina)
+
+Professor: "Flavio"
+
+Sistema escreve: Estudante:"Plinio" + (Matricula por ordem de registro neste formato: 2025010001 significando 2025 ou ano atual, 1 semestre, aluno 1), está na turma: "T##"(## sendo o código de turma, que é a primeira letra da disciplina + numero entre 1 e 5, que o professor vai dar aula), vai ter aula com Flavio, na disciplina "codificação"
+
+Cada professor no sistema tem CPF, Nome e codigo
+
+Cada turma tem seu codigo de identificacao proprio, codigo da disciplina e codigo do professor
+
+

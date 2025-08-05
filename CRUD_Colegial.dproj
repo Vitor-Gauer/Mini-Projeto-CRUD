@@ -124,15 +124,9 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="CRUDColegial.pas">
-            <Form>FColegio_CRUD</Form>
-            <FormType>dfm</FormType>
+            <Form>,
+  UChamarArquivoJSON in &apos;UChamarArquivoJSON.pas&apos;</Form>
         </DCCReference>
-        <DCCReference Include="estudantes.pas"/>
-        <DCCReference Include="professores.pas"/>
-        <DCCReference Include="disciplinas.pas"/>
-        <DCCReference Include="turmas.pas"/>
-        <DCCReference Include="matriculas.pas"/>
-        <DCCReference Include="UChamarArquivoJSON.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -1,7 +1,7 @@
 object FColegio_CRUD: TFColegio_CRUD
   Left = 0
   Top = 0
-  Caption = 'FColegio_CRUD'
+  Caption = 'TFColegio_CRUD'
   ClientHeight = 512
   ClientWidth = 657
   Color = clBtnFace
@@ -10,6 +10,7 @@ object FColegio_CRUD: TFColegio_CRUD
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poDesigned
   TextHeight = 15
   object pnlEscolhaDisciplina: TPanel
     AlignWithMargins = True
@@ -32,28 +33,16 @@ object FColegio_CRUD: TFColegio_CRUD
       Align = alTop
       Alignment = taCenter
       Caption = 'Escolha a disciplina a cursar'
-      ExplicitLeft = 8
-      ExplicitTop = 25
-    end
-    object btnDisciplinaInformaticaBasica: TButton
-      AlignWithMargins = True
-      Left = 59
-      Top = 53
-      Width = 165
-      Height = 24
-      Margins.Bottom = 2
-      Caption = 'Informatica basica'
-      TabOrder = 1
-      OnClick = btnDisciplinaClick
+      ExplicitWidth = 146
     end
     object btnDisciplinaFullStack: TButton
       AlignWithMargins = True
-      Left = 248
+      Left = 242
       Top = 53
       Width = 165
       Height = 24
       Caption = 'FullStack'
-      TabOrder = 2
+      TabOrder = 1
       OnClick = btnDisciplinaClick
     end
     object btnDisciplinaUXDesign: TButton
@@ -63,7 +52,7 @@ object FColegio_CRUD: TFColegio_CRUD
       Width = 165
       Height = 24
       Caption = 'UX Design'
-      TabOrder = 3
+      TabOrder = 2
       OnClick = btnDisciplinaClick
     end
     object btnDisciplinaSeguranca: TButton
@@ -72,7 +61,7 @@ object FColegio_CRUD: TFColegio_CRUD
       Width = 165
       Height = 24
       Caption = 'Seguran'#231'a da informa'#231#227'o'
-      TabOrder = 4
+      TabOrder = 3
       OnClick = btnDisciplinaClick
     end
     object btnDisciplinaAnaliseData: TButton
@@ -81,7 +70,7 @@ object FColegio_CRUD: TFColegio_CRUD
       Width = 165
       Height = 24
       Caption = 'Analise de Dados'
-      TabOrder = 5
+      TabOrder = 4
       OnClick = btnDisciplinaClick
     end
     object btnDisciplinaEtica: TButton
@@ -90,7 +79,7 @@ object FColegio_CRUD: TFColegio_CRUD
       Width = 165
       Height = 24
       Caption = #201'tica de Dados'
-      TabOrder = 6
+      TabOrder = 5
       OnClick = btnDisciplinaClick
     end
     object pnlEscolhaProfessor: TPanel
@@ -132,6 +121,17 @@ object FColegio_CRUD: TFColegio_CRUD
         OnClick = btnProfessorClick
       end
     end
+    object btnDisciplinaInformaticaBasica: TButton
+      AlignWithMargins = True
+      Left = 57
+      Top = 53
+      Width = 165
+      Height = 24
+      Margins.Bottom = 2
+      Caption = 'Informatica basica'
+      TabOrder = 6
+      OnClick = btnDisciplinaClick
+    end
   end
   object btnConfirmarNomeEstudante: TButton
     Left = 287
@@ -149,5 +149,14 @@ object FColegio_CRUD: TFColegio_CRUD
     Height = 23
     TabOrder = 2
     TextHint = 'Digite nome do estudante'
+  end
+  object btnMostrarDados: TButton
+    Left = 270
+    Top = 381
+    Width = 106
+    Height = 25
+    Caption = 'Mostrar JSON'
+    TabOrder = 3
+    OnClick = btnMostrarDadosClick
   end
 end

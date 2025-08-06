@@ -1,0 +1,18 @@
+{
+  "alunos": [
+    {
+      "nome": "Arthur",
+      "turma": "1A",
+      "matricula": "MA#2025020000",
+      "disciplina": "Informatica basica",
+      "professor_codigo": "PROF01"
+    }
+  ],
+  "professores": [
+    {
+      "nome": "Flavio",
+      "cpf": "123.456.789-00",
+      "codigo": "PROF01"
+    }
+  ]
+}

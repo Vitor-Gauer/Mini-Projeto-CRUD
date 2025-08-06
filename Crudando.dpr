@@ -1,4 +1,4 @@
-program CRUD_Colegial;
+program Crudando;
 
 uses
   Vcl.Forms,

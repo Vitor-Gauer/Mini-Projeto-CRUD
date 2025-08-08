@@ -38,7 +38,6 @@ Este repositório contém um projeto de CRUD desenvolvido como parte de um mini-
       }
     ]
   }
-  ```
 
 ## Proxima Atividade:
 

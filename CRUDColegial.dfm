@@ -205,7 +205,7 @@ object FColegio_CRUD: TFColegio_CRUD
       Left = 204
       Top = 113
       Width = 143
-      Height = 24
+      Height = 23
       TabOrder = 2
       TextHint = 'Senha'
     end

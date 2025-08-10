@@ -23,19 +23,27 @@ Interface visual do novo sistema acadêmico, com abas para Estudantes, Professor
 Código-fonte do formulário principal, implementando toda a lógica de CRUD para cada entidade.
 ### Unidades de Controle e Modelo:
 uEstudante.pas
+
 uProfessor.pas
+
 uDisciplina.pas
+
 uTurma.pas
+
 uMatricula.pas
 ### Motivo:
-O novo projeto segue uma arquitetura MVC simplificada, com classes modelo e controladoras para cada entidade, facilitando manutenção, testes e futuras expansões.
+O novo projeto segue uma arquitetura MVC simplificada, com classes modelo e controladoras para cada entidade, facilitando manutenção, testes e futuras expansões (Exemplo: O Controller receberia o clique do botão "incluir", pediria ao Model para salvar a nova entidade e, em seguida, instruiria a View a atualizar a lista na tela para incluir a nova entidade.).
 
 ## 3. Estrutura de Dados
 ### Arquivos .txt para Persistência (dentro da pasta onde está o executavel do programa):
 estudantes.txt
+
 professores.txt
+
 disciplinas.txt
+
 turmas.txt
+
 matriculas.txt
 ### Motivo:
 Cada entidade possui seu próprio arquivo de dados, facilitando o CRUD e a separação de responsabilidades.
@@ -49,27 +57,35 @@ Para cada entidade (Estudante, Professor, Disciplina, Turma, Matrícula), foi cr
 #### Métodos para carregar e salvar dados do respectivo arquivo .txt
 ## Exemplo de Formato dos Arquivos:
 
-estudantes.txt:
-professores.txt:
-disciplinas.txt:
-turmas.txt:
-matriculas.txt:
+estudantes.txt
+
+professores.txt
+
+disciplinas.txt
+
+turmas.txt
+
+matriculas.txt
 
 ## 5. Interface Gráfica
 O novo formulário principal (SistemaAcademico.dfm) utiliza um TPageControl com abas para cada entidade, permitindo ao usuário navegar e realizar operações CRUD de forma intuitiva.
-Cada aba possui campos de entrada, botões de ação e um TListBox para exibição dos registros.
+Cada aba possui campos de entrada, botões de ação e um TListBox para exibição dos registros. O usuario pode preencher o campo "código" com um numero para procurar por uma entidade
 ## 6. Resumo das Mudanças
 Remoção completa do projeto anterior e seus arquivos.
+
 Criação de um novo projeto, com arquitetura modular e separação clara entre entidades.
+
 Persistência de dados agora em arquivos .txt por entidade na pasta onde está o executavel do programa.
+
 Interface gráfica aprimorada e centralizada.
+
 Código mais organizado, facilitando manutenção e expansão futura.
 
 ## 7. Proximas Atividades:
 
 ### 1. Controle de Usuários e Permissões
 
-Readicionar login e diferentes níveis de acesso (admin, professor, estudante).
+(Re)adicionar login e diferentes níveis de acesso (admin, professor, estudante).
 
 #### Funcionalidades:
 

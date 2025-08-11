@@ -1,4 +1,4 @@
-﻿unit uMatricula;
+unit uMatricula;
 
 interface
 
@@ -6,40 +6,40 @@ uses
   System.Classes, System.SysUtils, System.Generics.Collections;
 
 type
-  // Classe modelo para a entidade Matrícula.
+  // Classe modelo para Matrícula
   TMatricula = class
   private
     FCodigo: Integer;
     FCodigoTurma: Integer;
     FCodigoEstudante: Integer;
   public
-    constructor Create(aCodigo, aCodigoTurma, aCodigoEstudante: Integer); // Construtor para inicializar uma nova instância de TMatricula com código, código da turma e código do estudante.
-    property Codigo: Integer read FCodigo write FCodigo; // Propriedade de acesso para o código da matrícula (leitura e escrita).
-    property CodigoTurma: Integer read FCodigoTurma write FCodigoTurma; // Propriedade de acesso para o código da turma (leitura e escrita).
-    property CodigoEstudante: Integer read FCodigoEstudante write FCodigoEstudante; // Propriedade de acesso para o código do estudante (leitura e escrita).
-    function ToString: string; override; // Sobrescreve o método padrão para retornar uma representação em string do objeto.
+    constructor Create(aCodigo, aCodigoTurma, aCodigoEstudante: Integer);
+    property Codigo: Integer read FCodigo write FCodigo;
+    property CodigoTurma: Integer read FCodigoTurma write FCodigoTurma;
+    property CodigoEstudante: Integer read FCodigoEstudante write FCodigoEstudante;
+    function ToString: string; override;
   end;
 
-  // Controlador para gerenciar as operações de CRUD da entidade Matrícula.
+  // Controlador para gerenciar Matrículas
   TMatriculaControlador = class
   private
-    FLista: TObjectList<TMatricula>; // Gerencia uma lista de objetos TMatricula, liberando a memória automaticamente.
-    FArquivo: string; // Armazena o nome do arquivo onde os dados serão persistidos.
-    function BuscarIndice(aCodigo: Integer): Integer; // Função auxiliar para encontrar o índice de uma matrícula na lista através do código.
-    function ObterProximoCodigo: Integer; // Função auxiliar que encontra e retorna o próximo código sequencial disponível.
-    function ExisteCombinacao(aCodigoTurma, aCodigoEstudante: Integer): Boolean; // Verifica se já existe uma matrícula para a combinação de turma e estudante fornecida.
+    FLista: TObjectList<TMatricula>;
+    FArquivo: string;
+    function BuscarIndice(aCodigo: Integer): Integer;
+    function ObterProximoCodigo: Integer;
+    function ExisteCombinacao(aCodigoTurma, aCodigoEstudante: Integer): Boolean;
   public
-    constructor Create; // Construtor do controlador.
-    destructor Destroy; override; // Destrutor, responsável por liberar a memória da lista.
+    constructor Create;
+    destructor Destroy; override;
 
-    function Incluir(aCodigo: Integer; aCodigoTurma, aCodigoEstudante: Integer): Boolean; // Adiciona uma nova matrícula à lista e salva os dados no arquivo.
-    function Atualizar(aCodigo, aCodigoTurma, aCodigoEstudante: Integer): Boolean; // Atualiza os códigos da turma e do estudante de uma matrícula existente e salva os dados.
-    function Excluir(aCodigo: Integer): Boolean; // Remove uma matrícula da lista e salva os dados.
-    function BuscarPorCodigo(aCodigo: Integer): TMatricula; // Busca e retorna uma matrícula específica pelo código.
-    procedure Listar(AStringList: TStrings); // Preenche um TStrings (como de um TListBox) com a representação em string de cada matrícula.
+    function Incluir(aCodigo: Integer; aCodigoTurma, aCodigoEstudante: Integer): Boolean;
+    function Atualizar(aCodigo, aCodigoTurma, aCodigoEstudante: Integer): Boolean;
+    function Excluir(aCodigo: Integer): Boolean;
+    function BuscarPorCodigo(aCodigo: Integer): TMatricula;
+    procedure Listar(AStringList: TStrings);
 
-    procedure CarregarDados; // Carrega os dados das matrículas do arquivo para a lista.
-    procedure SalvarDados; // Salva os dados da lista de matrículas no arquivo.
+    procedure CarregarDados;
+    procedure SalvarDados;
   end;
 
 implementation
@@ -50,7 +50,7 @@ implementation
 
 constructor TMatricula.Create(aCodigo, aCodigoTurma, aCodigoEstudante: Integer);
 begin
-  inherited Create; // Chama o construtor da classe base.
+  inherited Create;
   FCodigo := aCodigo;
   FCodigoTurma := aCodigoTurma;
   FCodigoEstudante := aCodigoEstudante;
@@ -58,7 +58,6 @@ end;
 
 function TMatricula.ToString: string;
 begin
-  // Formata o resultado para uma string amigável, facilitando a exibição.
   Result := Format('Código: %d - Turma: %d - Estudante: %d',
     [FCodigo, FCodigoTurma, FCodigoEstudante]);
 end;
@@ -70,14 +69,13 @@ end;
 constructor TMatriculaControlador.Create;
 begin
   inherited Create;
-  // Inicializa a lista de objetos e o nome do arquivo. O parâmetro "True" garante que os objetos da lista serão destruídos automaticamente.
   FLista := TObjectList<TMatricula>.Create(True);
   FArquivo := 'matriculas.txt';
 end;
 
 destructor TMatriculaControlador.Destroy;
 begin
-  FLista.Free; // Libera a memória alocada para a lista e os objetos TMatricula.
+  FLista.Free;
   inherited Destroy;
 end;
 
@@ -85,13 +83,12 @@ function TMatriculaControlador.BuscarIndice(aCodigo: Integer): Integer;
 var
   i: Integer;
 begin
-  Result := -1; // Inicializa o resultado como -1 (não encontrado).
-  // Itera sobre a lista para encontrar o índice de uma matrícula com o código especificado.
+  Result := -1;
   for i := 0 to FLista.Count - 1 do
   begin
     if FLista[i].Codigo = aCodigo then
     begin
-      Result := i; // Retorna o índice se encontrar.
+      Result := i;
       Break;
     end;
   end;
@@ -103,13 +100,12 @@ var
   maiorCodigo: Integer;
 begin
   maiorCodigo := 0;
-  // Itera sobre a lista para encontrar o maior código existente.
   for i := 0 to FLista.Count - 1 do
   begin
     if FLista[i].Codigo > maiorCodigo then
       maiorCodigo := FLista[i].Codigo;
   end;
-  Result := maiorCodigo + 1; // O próximo código é o maior encontrado mais 1.
+  Result := maiorCodigo + 1;
 end;
 
 function TMatriculaControlador.ExisteCombinacao(aCodigoTurma, aCodigoEstudante: Integer): Boolean;
@@ -117,7 +113,6 @@ var
   i: Integer;
 begin
   Result := False;
-  // Itera sobre a lista para verificar se a combinação de turma e estudante já existe.
   for i := 0 to FLista.Count - 1 do
   begin
     if (FLista[i].CodigoTurma = aCodigoTurma) and
@@ -134,24 +129,20 @@ var
   matricula: TMatricula;
 begin
   Result := False;
-  // Lança exceção se o código já existir.
   if BuscarIndice(aCodigo) <> -1 then
     raise Exception.Create('Código da matrícula já existe');
-  // Lança exceção se o código da turma for inválido.
   if aCodigoTurma <= 0 then
     raise Exception.Create('Código da turma deve ser maior que zero');
-  // Lança exceção se o código do estudante for inválido.
   if aCodigoEstudante <= 0 then
     raise Exception.Create('Código do estudante deve ser maior que zero');
-  // Lança exceção se a combinação de turma e estudante já existir.
+  
   if ExisteCombinacao(aCodigoTurma, aCodigoEstudante) then
     raise Exception.Create('Estudante já está matriculado nesta turma');
-
+    
   try
-    // Cria um novo objeto TMatricula e o adiciona à lista.
     matricula := TMatricula.Create(aCodigo, aCodigoTurma, aCodigoEstudante);
     FLista.Add(matricula);
-    SalvarDados; // Salva as alterações no arquivo.
+    SalvarDados;
     Result := True;
   except
     on E: Exception do
@@ -167,17 +158,13 @@ begin
   Result := False;
   indice := BuscarIndice(aCodigo);
 
-  // Lança exceção se a matrícula não for encontrada.
   if indice < 0 then
     raise Exception.Create('Matrícula não encontrada');
-  // Lança exceção se o novo código da turma for inválido.
   if aCodigoTurma <= 0 then
     raise Exception.Create('Código da turma deve ser maior que zero');
-  // Lança exceção se o novo código do estudante for inválido.
   if aCodigoEstudante <= 0 then
     raise Exception.Create('Código do estudante deve ser maior que zero');
 
-  // Itera para verificar se a nova combinação de turma e estudante já existe em outra matrícula.
   for i := 0 to FLista.Count - 1 do
   begin
     if (i <> indice) and (FLista[i].CodigoTurma = aCodigoTurma) and (FLista[i].CodigoEstudante = aCodigoEstudante) then
@@ -185,9 +172,9 @@ begin
   end;
 
   try
-    FLista[indice].CodigoTurma := aCodigoTurma; // Atualiza o código da turma.
-    FLista[indice].CodigoEstudante := aCodigoEstudante; // Atualiza o código do estudante.
-    SalvarDados; // Salva as alterações no arquivo.
+    FLista[indice].CodigoTurma := aCodigoTurma;
+    FLista[indice].CodigoEstudante := aCodigoEstudante;
+    SalvarDados;
     Result := True;
   except
     on E: Exception do
@@ -201,12 +188,11 @@ var
 begin
   Result := False;
   indice := BuscarIndice(aCodigo);
-  // Se a matrícula for encontrada, a exclui.
   if indice >= 0 then
   begin
     try
-      FLista.Delete(indice); // Exclui a matrícula da lista (libera a memória automaticamente).
-      SalvarDados; // Salva as alterações no arquivo.
+      FLista.Delete(indice);
+      SalvarDados;
       Result := True;
     except
       on E: Exception do
@@ -221,7 +207,6 @@ var
 begin
   Result := nil;
   indice := BuscarIndice(aCodigo);
-  // Retorna o objeto TMatricula se ele for encontrado na lista.
   if indice >= 0 then
     Result := FLista[indice];
 end;
@@ -231,7 +216,6 @@ var
   matricula: TMatricula;
 begin
   AStringList.Clear;
-  // Itera sobre a lista de matrículas e adiciona a representação em string de cada uma ao AStringList.
   for matricula in FLista do
     AStringList.Add(matricula.ToString);
 end;
@@ -242,25 +226,20 @@ var
   matricula: TMatricula;
   codigo, codigoTurma, codigoEstudante: Integer;
 begin
-  // Sai se o arquivo de dados não existir.
   if not FileExists(FArquivo) then Exit;
-  // Cria um TFileStream para ler o arquivo.
   F := TFileStream.Create(FArquivo, fmOpenRead);
   try
-    FLista.Clear; // Limpa a lista atual antes de carregar os novos dados.
-    // Lê o arquivo sequencialmente enquanto houver dados.
+    FLista.Clear;
     while F.Position < F.Size do
     begin
-      // Lê o código, o código da turma e o código do estudante, respectivamente.
       F.Read(codigo, SizeOf(Integer));
       F.Read(codigoTurma, SizeOf(Integer));
       F.Read(codigoEstudante, SizeOf(Integer));
-      // Cria um novo objeto TMatricula com os dados lidos e o adiciona à lista.
       matricula := TMatricula.Create(codigo, codigoTurma, codigoEstudante);
       FLista.Add(matricula);
     end;
   finally
-    F.Free; // Garante que o FileStream seja liberado.
+    F.Free;
   end;
 end;
 
@@ -269,19 +248,16 @@ var
   F: TFileStream;
   matricula: TMatricula;
 begin
-  // Cria um TFileStream para escrever no arquivo, substituindo o conteúdo existente.
   F := TFileStream.Create(FArquivo, fmCreate);
   try
-    // Itera sobre a lista de matrículas e escreve os dados de cada uma no arquivo.
     for matricula in FLista do
     begin
-      // Escreve o código, o código da turma e o código do estudante.
       F.Write(matricula.Codigo, SizeOf(Integer));
       F.Write(matricula.CodigoTurma, SizeOf(Integer));
       F.Write(matricula.CodigoEstudante, SizeOf(Integer));
     end;
   finally
-    F.Free; // Garante que o FileStream seja liberado.
+    F.Free;
   end;
 end;
 

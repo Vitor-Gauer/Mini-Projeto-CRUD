@@ -1,4 +1,4 @@
-﻿unit SistemaAcademico;
+unit SistemaAcademico;
 
 interface
 
@@ -9,17 +9,15 @@ uses
   uEstudante, uProfessor, uDisciplina, uTurma, uMatricula;
 
 type
-  // Formulário principal da aplicação de Sistema Acadêmico.
   TFSistemaAcademico = class(TForm)
     pgcAbasDoForm: TPageControl;
-    // Componente de abas para organizar as seções da aplicação.
     tabEstudantes: TTabSheet;
     tabProfessores: TTabSheet;
     tabDisciplinas: TTabSheet;
     tabTurmas: TTabSheet;
     tabMatriculas: TTabSheet;
 
-    // Componentes para a seção de Estudantes
+    // Estudantes
     pnlEstudantes: TPanel;
     lblCodigoEst: TLabel;
     lblNomeEst: TLabel;
@@ -32,7 +30,7 @@ type
     btnBuscarEst: TButton;
     lbxEstudantes: TListBox;
 
-    // Componentes para a seção de Professores
+    // Professores
     pnlProfessores: TPanel;
     lblCodigoProf: TLabel;
     lblNomeProf: TLabel;
@@ -47,7 +45,7 @@ type
     btnBuscarProf: TButton;
     lbxProfessores: TListBox;
 
-    // Componentes para a seção de Disciplinas
+    // Disciplinas
     pnlDisciplinas: TPanel;
     lblCodigoDisc: TLabel;
     lblNomeDisc: TLabel;
@@ -60,7 +58,7 @@ type
     btnBuscarDisc: TButton;
     lbxDisciplinas: TListBox;
 
-    // Componentes para a seção de Turmas
+    // Turmas
     pnlTurmas: TPanel;
     lblCodigoTurma: TLabel;
     lblCodigoProfTurma: TLabel;
@@ -75,7 +73,7 @@ type
     btnBuscarTurma: TButton;
     lbxTurmas: TListBox;
 
-    // Componentes para a seção de Matrículas
+    // Matriculas
     pnlMatriculas: TPanel;
     lblCodigoMat: TLabel;
     lblCodigoTurmaMat: TLabel;
@@ -90,11 +88,10 @@ type
     btnBuscarMat: TButton;
     lbxMatriculas: TListBox;
 
-    procedure FormCreate(Sender: TObject); // Evento de criação do formulário.
+    procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    // Evento de destruição do formulário.
 
-    // Eventos de clique para a seção de Estudantes
+    // Eventos Estudantes
     procedure btnIncluirEstClick(Sender: TObject);
     procedure btnListarEstClick(Sender: TObject);
     procedure btnAtualizarEstClick(Sender: TObject);
@@ -102,7 +99,7 @@ type
     procedure btnBuscarEstClick(Sender: TObject);
     procedure lbxEstudantesClick(Sender: TObject);
 
-    // Eventos de clique para a seção de Professores
+    // Eventos Professores
     procedure btnIncluirProfClick(Sender: TObject);
     procedure btnListarProfClick(Sender: TObject);
     procedure btnAtualizarProfClick(Sender: TObject);
@@ -110,7 +107,7 @@ type
     procedure btnBuscarProfClick(Sender: TObject);
     procedure lbxProfessoresClick(Sender: TObject);
 
-    // Eventos de clique para a seção de Disciplinas
+    // Eventos Disciplinas
     procedure btnIncluirDiscClick(Sender: TObject);
     procedure btnListarDiscClick(Sender: TObject);
     procedure btnAtualizarDiscClick(Sender: TObject);
@@ -118,7 +115,7 @@ type
     procedure btnBuscarDiscClick(Sender: TObject);
     procedure lbxDisciplinasClick(Sender: TObject);
 
-    // Eventos de clique para a seção de Turmas
+    // Eventos Turmas
     procedure btnIncluirTurmaClick(Sender: TObject);
     procedure btnListarTurmaClick(Sender: TObject);
     procedure btnAtualizarTurmaClick(Sender: TObject);
@@ -126,7 +123,7 @@ type
     procedure btnBuscarTurmaClick(Sender: TObject);
     procedure lbxTurmasClick(Sender: TObject);
 
-    // Eventos de clique para a seção de Matrículas
+    // Eventos Matriculas
     procedure btnIncluirMatClick(Sender: TObject);
     procedure btnListarMatClick(Sender: TObject);
     procedure btnAtualizarMatClick(Sender: TObject);
@@ -135,26 +132,24 @@ type
     procedure lbxMatriculasClick(Sender: TObject);
 
   private
-    // Instâncias dos controladores para cada entidade
     FEstudanteControlador: TEstudanteControlador;
     FProfessorControlador: TProfessorControlador;
     FDisciplinaControlador: TDisciplinaControlador;
     FTurmaControlador: TTurmaControlador;
     FMatriculaControlador: TMatriculaControlador;
 
-    // Métodos auxiliares para limpar os campos de entrada
     procedure LimparCamposEstudante;
     procedure LimparCamposProfessor;
     procedure LimparCamposDisciplina;
     procedure LimparCamposTurma;
     procedure LimparCamposMatricula;
 
-    // Métodos auxiliares para carregar dados das entidades nos campos de entrada
     procedure CarregarDadosEstudante(estudante: TEstudante);
     procedure CarregarDadosProfessor(professor: TProfessor);
     procedure CarregarDadosDisciplina(disciplina: TDisciplina);
     procedure CarregarDadosTurma(turma: TTurma);
     procedure CarregarDadosMatricula(matricula: TMatricula);
+
   public
     { Public declarations }
   end;
@@ -165,6 +160,7 @@ var
 implementation
 
 {$R *.dfm}
+
 // --------------------------------------------------------------------------------------------------
 // Eventos do Formulário Principal
 // --------------------------------------------------------------------------------------------------
@@ -172,21 +168,21 @@ implementation
 procedure TFSistemaAcademico.FormCreate(Sender: TObject);
 begin
   try
-    // Inicializa as instâncias de todos os controladores
+    // Inicializa os Controladores
     FEstudanteControlador := TEstudanteControlador.Create;
     FProfessorControlador := TProfessorControlador.Create;
     FDisciplinaControlador := TDisciplinaControlador.Create;
     FTurmaControlador := TTurmaControlador.Create;
     FMatriculaControlador := TMatriculaControlador.Create;
 
-    // Carrega os dados persistidos de todos os controladores
+    // Carrega todos os dados dos arquivos
     FEstudanteControlador.CarregarDados;
     FProfessorControlador.CarregarDados;
     FDisciplinaControlador.CarregarDados;
     FTurmaControlador.CarregarDados;
     FMatriculaControlador.CarregarDados;
 
-    // Atualiza as ListBox com os dados carregados
+    // Atualiza as listas
     btnListarEstClick(nil);
     btnListarProfClick(nil);
     btnListarDiscClick(nil);
@@ -202,7 +198,7 @@ end;
 procedure TFSistemaAcademico.FormDestroy(Sender: TObject);
 begin
   try
-    // Antes de fechar o formulário, salva os dados e libera a memória dos controladores
+    // Salva todos os dados antes de fechar
     if Assigned(FEstudanteControlador) then
     begin
       FEstudanteControlador.SalvarDados;
@@ -245,7 +241,6 @@ end;
 
 procedure TFSistemaAcademico.LimparCamposEstudante;
 begin
-  // Limpa os campos de texto e reabilita o campo de código para novas inclusões.
   edtCodigoEst.Clear;
   edtNomeEst.Clear;
   edtCodigoEst.Enabled := True;
@@ -253,7 +248,6 @@ end;
 
 procedure TFSistemaAcademico.LimparCamposProfessor;
 begin
-  // Limpa os campos de texto e reabilita o campo de código para novas inclusões.
   edtCodigoProf.Clear;
   edtNomeProf.Clear;
   edtCPFProf.Clear;
@@ -262,7 +256,6 @@ end;
 
 procedure TFSistemaAcademico.LimparCamposDisciplina;
 begin
-  // Limpa os campos de texto e reabilita o campo de código para novas inclusões.
   edtCodigoDisc.Clear;
   edtNomeDisc.Clear;
   edtCodigoDisc.Enabled := True;
@@ -270,7 +263,6 @@ end;
 
 procedure TFSistemaAcademico.LimparCamposTurma;
 begin
-  // Limpa os campos de texto e reabilita o campo de código para novas inclusões.
   edtCodigoTurma.Clear;
   edtCodigoProfTurma.Clear;
   edtCodigoDiscTurma.Clear;
@@ -279,7 +271,6 @@ end;
 
 procedure TFSistemaAcademico.LimparCamposMatricula;
 begin
-  // Limpa os campos de texto e reabilita o campo de código para novas inclusões.
   edtCodigoMat.Clear;
   edtCodigoTurmaMat.Clear;
   edtCodigoEstMat.Clear;
@@ -288,7 +279,6 @@ end;
 
 procedure TFSistemaAcademico.CarregarDadosEstudante(estudante: TEstudante);
 begin
-  // Carrega os dados de um objeto TEstudante nos campos de texto e desabilita o campo de código.
   if Assigned(estudante) then
   begin
     edtCodigoEst.Text := IntToStr(estudante.Codigo);
@@ -299,7 +289,6 @@ end;
 
 procedure TFSistemaAcademico.CarregarDadosProfessor(professor: TProfessor);
 begin
-  // Carrega os dados de um objeto TProfessor nos campos de texto e desabilita o campo de código.
   if Assigned(professor) then
   begin
     edtCodigoProf.Text := IntToStr(professor.Codigo);
@@ -311,7 +300,6 @@ end;
 
 procedure TFSistemaAcademico.CarregarDadosDisciplina(disciplina: TDisciplina);
 begin
-  // Carrega os dados de um objeto TDisciplina nos campos de texto e desabilita o campo de código.
   if Assigned(disciplina) then
   begin
     edtCodigoDisc.Text := IntToStr(disciplina.Codigo);
@@ -322,7 +310,6 @@ end;
 
 procedure TFSistemaAcademico.CarregarDadosTurma(turma: TTurma);
 begin
-  // Carrega os dados de um objeto TTurma nos campos de texto e desabilita o campo de código.
   if Assigned(turma) then
   begin
     edtCodigoTurma.Text := IntToStr(turma.Codigo);
@@ -334,7 +321,6 @@ end;
 
 procedure TFSistemaAcademico.CarregarDadosMatricula(matricula: TMatricula);
 begin
-  // Carrega os dados de um objeto TMatricula nos campos de texto e desabilita o campo de código.
   if Assigned(matricula) then
   begin
     edtCodigoMat.Text := IntToStr(matricula.Codigo);
@@ -350,33 +336,36 @@ end;
 
 procedure TFSistemaAcademico.btnIncluirEstClick(Sender: TObject);
 var
-  Codigo: Integer;
-  Nome: string;
+  codigo: Integer;
+  nome: string;
 begin
   try
-    // Valida o código e o nome antes de tentar a inclusão.
-    if not TryStrToInt(edtCodigoEst.Text, Codigo) then
+    // Validação de dados
+    if not TryStrToInt(edtCodigoEst.Text, codigo) then
     begin
       ShowMessage('Código deve ser um número inteiro válido!');
       edtCodigoEst.SetFocus;
       Exit;
     end;
 
-    Nome := Trim(edtNomeEst.Text);
-    if Nome = '' then
+    nome := Trim(edtNomeEst.Text);
+    if nome = '' then
     begin
       ShowMessage('Nome é obrigatório!');
       edtNomeEst.SetFocus;
       Exit;
     end;
 
-    // Chama o controlador para incluir o estudante.
-    if FEstudanteControlador.Incluir(Codigo, Nome) then
+    // Inclui o estudante
+    if FEstudanteControlador.Incluir(codigo, nome) then
     begin
       ShowMessage('Estudante incluído com sucesso!');
-      LimparCamposEstudante; // Limpa os campos da interface.
-      btnListarEstClick(nil); // Atualiza a ListBox.
-    end;
+      LimparCamposEstudante;
+      btnListarEstClick(nil);
+      FEstudanteControlador.SalvarDados;
+    end
+    else
+      ShowMessage('Erro: Código já existe!');
 
   except
     on E: Exception do
@@ -387,7 +376,6 @@ end;
 procedure TFSistemaAcademico.btnListarEstClick(Sender: TObject);
 begin
   try
-    // Pede ao controlador para listar os estudantes e preenche a ListBox.
     FEstudanteControlador.Listar(lbxEstudantes.Items);
   except
     on E: Exception do
@@ -397,32 +385,30 @@ end;
 
 procedure TFSistemaAcademico.btnAtualizarEstClick(Sender: TObject);
 var
-  Codigo: Integer;
-  Nome: string;
+  codigo: Integer;
+  nome: string;
 begin
   try
-    // Valida se um estudante foi selecionado (o código deve ser válido).
-    if not TryStrToInt(edtCodigoEst.Text, Codigo) then
+    if not TryStrToInt(edtCodigoEst.Text, codigo) then
     begin
       ShowMessage('Selecione um estudante para atualizar!');
       Exit;
     end;
 
-    // Valida se o nome foi preenchido.
-    Nome := Trim(edtNomeEst.Text);
-    if Nome = '' then
+    nome := Trim(edtNomeEst.Text);
+    if nome = '' then
     begin
       ShowMessage('Nome é obrigatório!');
       edtNomeEst.SetFocus;
       Exit;
     end;
 
-    // Chama o controlador para atualizar o estudante.
-    if FEstudanteControlador.Atualizar(Codigo, Nome) then
+    if FEstudanteControlador.Atualizar(codigo, nome) then
     begin
       ShowMessage('Estudante atualizado com sucesso!');
-      LimparCamposEstudante; // Limpa os campos da interface.
-      btnListarEstClick(nil); // Atualiza a ListBox.
+      LimparCamposEstudante;
+      btnListarEstClick(nil);
+      FEstudanteControlador.SalvarDados;
     end
     else
       ShowMessage('Erro: Estudante não encontrado!');
@@ -435,26 +421,23 @@ end;
 
 procedure TFSistemaAcademico.btnExcluirEstClick(Sender: TObject);
 var
-  Codigo: Integer;
+  codigo: Integer;
 begin
   try
-    // Valida se um estudante foi selecionado.
-    if not TryStrToInt(edtCodigoEst.Text, Codigo) then
+    if not TryStrToInt(edtCodigoEst.Text, codigo) then
     begin
       ShowMessage('Selecione um estudante para excluir!');
       Exit;
     end;
 
-    // Pede confirmação ao usuário antes de excluir.
-    if MessageDlg('Confirma a exclusão do estudante?', mtConfirmation,
-      [mbYes, mbNo], 0) = mrYes then
+    if MessageDlg('Confirma a exclusão do estudante?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
-      // Chama o controlador para excluir o estudante.
-      if FEstudanteControlador.Excluir(Codigo) then
+      if FEstudanteControlador.Excluir(codigo) then
       begin
         ShowMessage('Estudante excluído com sucesso!');
-        LimparCamposEstudante; // Limpa os campos da interface.
-        btnListarEstClick(nil); // Atualiza a ListBox.
+        LimparCamposEstudante;
+        btnListarEstClick(nil);
+        FEstudanteControlador.SalvarDados;
       end
       else
         ShowMessage('Erro: Estudante não encontrado!');
@@ -468,20 +451,18 @@ end;
 
 procedure TFSistemaAcademico.btnBuscarEstClick(Sender: TObject);
 var
-  Codigo: Integer;
+  codigo: Integer;
   estudante: TEstudante;
 begin
   try
-    // Valida se um código válido foi digitado para a busca.
-    if not TryStrToInt(edtCodigoEst.Text, Codigo) then
+    if not TryStrToInt(edtCodigoEst.Text, codigo) then
     begin
       ShowMessage('Digite um código válido para buscar!');
       edtCodigoEst.SetFocus;
       Exit;
     end;
 
-    // Busca o estudante e carrega os dados nos campos se encontrado.
-    estudante := FEstudanteControlador.BuscarPorCodigo(Codigo);
+    estudante := FEstudanteControlador.BuscarPorCodigo(codigo);
     if Assigned(estudante) then
       CarregarDadosEstudante(estudante)
     else
@@ -496,22 +477,21 @@ end;
 procedure TFSistemaAcademico.lbxEstudantesClick(Sender: TObject);
 var
   linha: string;
-  Codigo: Integer;
+  codigo: Integer;
   estudante: TEstudante;
 begin
   try
-    // Se um item da ListBox for clicado, extrai o código e carrega os dados nos campos.
     if lbxEstudantes.ItemIndex >= 0 then
     begin
       linha := lbxEstudantes.Items[lbxEstudantes.ItemIndex];
-      // Extrai o código da string formatada ("Código: X - Nome: Y").
+      // Extrai o código da linha (formato: "Código: X - Nome: Y")
       if Pos('Código: ', linha) > 0 then
       begin
         linha := Copy(linha, Pos('Código: ', linha) + 8, Length(linha));
         linha := Copy(linha, 1, Pos(' -', linha) - 1);
-        if TryStrToInt(linha, Codigo) then
+        if TryStrToInt(linha, codigo) then
         begin
-          estudante := FEstudanteControlador.BuscarPorCodigo(Codigo);
+          estudante := FEstudanteControlador.BuscarPorCodigo(codigo);
           CarregarDadosEstudante(estudante);
         end;
       end;
@@ -523,46 +503,48 @@ begin
 end;
 
 // --------------------------------------------------------------------------------------------------
-// Eventos Professores
+// Eventos Professores (Similar aos Estudantes, adaptado para Professor)
 // --------------------------------------------------------------------------------------------------
 
 procedure TFSistemaAcademico.btnIncluirProfClick(Sender: TObject);
 var
-  Codigo: Integer;
-  Nome, CPF: string;
+  codigo: Integer;
+  nome, cpf: string;
 begin
   try
-    // Valida o código, nome e CPF antes de tentar a inclusão.
-    if not TryStrToInt(edtCodigoProf.Text, Codigo) then
+    if not TryStrToInt(edtCodigoProf.Text, codigo) then
     begin
       ShowMessage('Código deve ser um número inteiro válido!');
       edtCodigoProf.SetFocus;
       Exit;
     end;
 
-    Nome := Trim(edtNomeProf.Text);
-    if Nome = '' then
+    nome := Trim(edtNomeProf.Text);
+    if nome = '' then
     begin
       ShowMessage('Nome é obrigatório!');
       edtNomeProf.SetFocus;
       Exit;
     end;
 
-    CPF := Trim(edtCPFProf.Text);
-    if CPF = '' then
+    cpf := Trim(edtCPFProf.Text);
+    if cpf = '' then
     begin
       ShowMessage('CPF é obrigatório!');
       edtCPFProf.SetFocus;
       Exit;
     end;
 
-    // Chama o controlador para incluir o professor.
-    if FProfessorControlador.Incluir(Codigo, Nome, CPF) then
+    if FProfessorControlador.Incluir(codigo, nome, cpf) then
     begin
       ShowMessage('Professor incluído com sucesso!');
-      LimparCamposProfessor; // Limpa os campos da interface.
-      btnListarProfClick(nil); // Atualiza a ListBox.
-    end;
+      LimparCamposProfessor;
+      btnListarProfClick(nil);
+      FProfessorControlador.SalvarDados;
+    end
+    else
+      ShowMessage('Erro: Código já existe!');
+
   except
     on E: Exception do
       ShowMessage('Erro ao incluir professor: ' + E.Message);
@@ -572,7 +554,6 @@ end;
 procedure TFSistemaAcademico.btnListarProfClick(Sender: TObject);
 begin
   try
-    // Pede ao controlador para listar os professores e preenche a ListBox.
     FProfessorControlador.Listar(lbxProfessores.Items);
   except
     on E: Exception do
@@ -582,42 +563,42 @@ end;
 
 procedure TFSistemaAcademico.btnAtualizarProfClick(Sender: TObject);
 var
-  Codigo: Integer;
-  Nome, CPF: string;
+  codigo: Integer;
+  nome, cpf: string;
 begin
   try
-    // Valida se um professor foi selecionado e os campos estão preenchidos.
-    if not TryStrToInt(edtCodigoProf.Text, Codigo) then
+    if not TryStrToInt(edtCodigoProf.Text, codigo) then
     begin
       ShowMessage('Selecione um professor para atualizar!');
       Exit;
     end;
 
-    Nome := Trim(edtNomeProf.Text);
-    if Nome = '' then
+    nome := Trim(edtNomeProf.Text);
+    if nome = '' then
     begin
       ShowMessage('Nome é obrigatório!');
       edtNomeProf.SetFocus;
       Exit;
     end;
 
-    CPF := Trim(edtCPFProf.Text);
-    if CPF = '' then
+    cpf := Trim(edtCPFProf.Text);
+    if cpf = '' then
     begin
       ShowMessage('CPF é obrigatório!');
       edtCPFProf.SetFocus;
       Exit;
     end;
 
-    // Chama o controlador para atualizar o professor.
-    if FProfessorControlador.Atualizar(Codigo, Nome, CPF) then
+    if FProfessorControlador.Atualizar(codigo, nome, cpf) then
     begin
       ShowMessage('Professor atualizado com sucesso!');
-      LimparCamposProfessor; // Limpa os campos da interface.
-      btnListarProfClick(nil); // Atualiza a ListBox.
+      LimparCamposProfessor;
+      btnListarProfClick(nil);
+      FProfessorControlador.SalvarDados;
     end
     else
       ShowMessage('Erro: Professor não encontrado!');
+
   except
     on E: Exception do
       ShowMessage('Erro ao atualizar professor: ' + E.Message);
@@ -626,30 +607,28 @@ end;
 
 procedure TFSistemaAcademico.btnExcluirProfClick(Sender: TObject);
 var
-  Codigo: Integer;
+  codigo: Integer;
 begin
   try
-    // Valida se um professor foi selecionado.
-    if not TryStrToInt(edtCodigoProf.Text, Codigo) then
+    if not TryStrToInt(edtCodigoProf.Text, codigo) then
     begin
       ShowMessage('Selecione um professor para excluir!');
       Exit;
     end;
 
-    // Pede confirmação ao usuário antes de excluir.
-    if MessageDlg('Confirma a exclusão do professor?', mtConfirmation,
-      [mbYes, mbNo], 0) = mrYes then
+    if MessageDlg('Confirma a exclusão do professor?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
-      // Chama o controlador para excluir o professor.
-      if FProfessorControlador.Excluir(Codigo) then
+      if FProfessorControlador.Excluir(codigo) then
       begin
         ShowMessage('Professor excluído com sucesso!');
-        LimparCamposProfessor; // Limpa os campos da interface.
-        btnListarProfClick(nil); // Atualiza a ListBox.
+        LimparCamposProfessor;
+        btnListarProfClick(nil);
+        FProfessorControlador.SalvarDados;
       end
       else
         ShowMessage('Erro: Professor não encontrado!');
     end;
+
   except
     on E: Exception do
       ShowMessage('Erro ao excluir professor: ' + E.Message);
@@ -658,24 +637,23 @@ end;
 
 procedure TFSistemaAcademico.btnBuscarProfClick(Sender: TObject);
 var
-  Codigo: Integer;
+  codigo: Integer;
   professor: TProfessor;
 begin
   try
-    // Valida se um código válido foi digitado para a busca.
-    if not TryStrToInt(edtCodigoProf.Text, Codigo) then
+    if not TryStrToInt(edtCodigoProf.Text, codigo) then
     begin
       ShowMessage('Digite um código válido para buscar!');
       edtCodigoProf.SetFocus;
       Exit;
     end;
 
-    // Busca o professor e carrega os dados nos campos se encontrado.
-    professor := FProfessorControlador.BuscarPorCodigo(Codigo);
+    professor := FProfessorControlador.BuscarPorCodigo(codigo);
     if Assigned(professor) then
       CarregarDadosProfessor(professor)
     else
       ShowMessage('Professor não encontrado!');
+
   except
     on E: Exception do
       ShowMessage('Erro ao buscar professor: ' + E.Message);
@@ -685,22 +663,20 @@ end;
 procedure TFSistemaAcademico.lbxProfessoresClick(Sender: TObject);
 var
   linha: string;
-  Codigo: Integer;
+  codigo: Integer;
   professor: TProfessor;
 begin
   try
-    // Se um item da ListBox for clicado, extrai o código e carrega os dados.
     if lbxProfessores.ItemIndex >= 0 then
     begin
       linha := lbxProfessores.Items[lbxProfessores.ItemIndex];
-      // Extrai o código da string formatada.
       if Pos('Código: ', linha) > 0 then
       begin
         linha := Copy(linha, Pos('Código: ', linha) + 8, Length(linha));
         linha := Copy(linha, 1, Pos(' -', linha) - 1);
-        if TryStrToInt(linha, Codigo) then
+        if TryStrToInt(linha, codigo) then
         begin
-          professor := FProfessorControlador.BuscarPorCodigo(Codigo);
+          professor := FProfessorControlador.BuscarPorCodigo(codigo);
           CarregarDadosProfessor(professor);
         end;
       end;
@@ -717,33 +693,35 @@ end;
 
 procedure TFSistemaAcademico.btnIncluirDiscClick(Sender: TObject);
 var
-  Codigo: Integer;
-  Nome: string;
+  codigo: Integer;
+  nome: string;
 begin
   try
-    // Valida o código e o nome antes de tentar a inclusão.
-    if not TryStrToInt(edtCodigoDisc.Text, Codigo) then
+    if not TryStrToInt(edtCodigoDisc.Text, codigo) then
     begin
       ShowMessage('Código deve ser um número inteiro válido!');
       edtCodigoDisc.SetFocus;
       Exit;
     end;
 
-    Nome := Trim(edtNomeDisc.Text);
-    if Nome = '' then
+    nome := Trim(edtNomeDisc.Text);
+    if nome = '' then
     begin
       ShowMessage('Nome é obrigatório!');
       edtNomeDisc.SetFocus;
       Exit;
     end;
 
-    // Chama o controlador para incluir a disciplina.
-    if FDisciplinaControlador.Incluir(Codigo, Nome) then
+    if FDisciplinaControlador.Incluir(codigo, nome) then
     begin
       ShowMessage('Disciplina incluída com sucesso!');
-      LimparCamposDisciplina; // Limpa os campos da interface.
-      btnListarDiscClick(nil); // Atualiza a ListBox.
-    end;
+      LimparCamposDisciplina;
+      btnListarDiscClick(nil);
+      FDisciplinaControlador.SalvarDados;
+    end
+    else
+      ShowMessage('Erro: Código já existe!');
+
   except
     on E: Exception do
       ShowMessage('Erro ao incluir disciplina: ' + E.Message);
@@ -753,7 +731,6 @@ end;
 procedure TFSistemaAcademico.btnListarDiscClick(Sender: TObject);
 begin
   try
-    // Pede ao controlador para listar as disciplinas e preenche a ListBox.
     FDisciplinaControlador.Listar(lbxDisciplinas.Items);
   except
     on E: Exception do
@@ -763,34 +740,34 @@ end;
 
 procedure TFSistemaAcademico.btnAtualizarDiscClick(Sender: TObject);
 var
-  Codigo: Integer;
-  Nome: string;
+  codigo: Integer;
+  nome: string;
 begin
   try
-    // Valida se uma disciplina foi selecionada e o campo de nome está preenchido.
-    if not TryStrToInt(edtCodigoDisc.Text, Codigo) then
+    if not TryStrToInt(edtCodigoDisc.Text, codigo) then
     begin
       ShowMessage('Selecione uma disciplina para atualizar!');
       Exit;
     end;
 
-    Nome := Trim(edtNomeDisc.Text);
-    if Nome = '' then
+    nome := Trim(edtNomeDisc.Text);
+    if nome = '' then
     begin
       ShowMessage('Nome é obrigatório!');
       edtNomeDisc.SetFocus;
       Exit;
     end;
 
-    // Chama o controlador para atualizar a disciplina.
-    if FDisciplinaControlador.Atualizar(Codigo, Nome) then
+    if FDisciplinaControlador.Atualizar(codigo, nome) then
     begin
       ShowMessage('Disciplina atualizada com sucesso!');
-      LimparCamposDisciplina; // Limpa os campos da interface.
-      btnListarDiscClick(nil); // Atualiza a ListBox.
+      LimparCamposDisciplina;
+      btnListarDiscClick(nil);
+      FDisciplinaControlador.SalvarDados;
     end
     else
       ShowMessage('Erro: Disciplina não encontrada!');
+
   except
     on E: Exception do
       ShowMessage('Erro ao atualizar disciplina: ' + E.Message);
@@ -799,30 +776,28 @@ end;
 
 procedure TFSistemaAcademico.btnExcluirDiscClick(Sender: TObject);
 var
-  Codigo: Integer;
+  codigo: Integer;
 begin
   try
-    // Valida se uma disciplina foi selecionada.
-    if not TryStrToInt(edtCodigoDisc.Text, Codigo) then
+    if not TryStrToInt(edtCodigoDisc.Text, codigo) then
     begin
       ShowMessage('Selecione uma disciplina para excluir!');
       Exit;
     end;
 
-    // Pede confirmação ao usuário.
-    if MessageDlg('Confirma a exclusão da disciplina?', mtConfirmation,
-      [mbYes, mbNo], 0) = mrYes then
+    if MessageDlg('Confirma a exclusão da disciplina?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
-      // Chama o controlador para excluir a disciplina.
-      if FDisciplinaControlador.Excluir(Codigo) then
+      if FDisciplinaControlador.Excluir(codigo) then
       begin
         ShowMessage('Disciplina excluída com sucesso!');
-        LimparCamposDisciplina; // Limpa os campos da interface.
-        btnListarDiscClick(nil); // Atualiza a ListBox.
+        LimparCamposDisciplina;
+        btnListarDiscClick(nil);
+        FDisciplinaControlador.SalvarDados;
       end
       else
         ShowMessage('Erro: Disciplina não encontrada!');
     end;
+
   except
     on E: Exception do
       ShowMessage('Erro ao excluir disciplina: ' + E.Message);
@@ -831,24 +806,23 @@ end;
 
 procedure TFSistemaAcademico.btnBuscarDiscClick(Sender: TObject);
 var
-  Codigo: Integer;
+  codigo: Integer;
   disciplina: TDisciplina;
 begin
   try
-    // Valida o código para a busca.
-    if not TryStrToInt(edtCodigoDisc.Text, Codigo) then
+    if not TryStrToInt(edtCodigoDisc.Text, codigo) then
     begin
       ShowMessage('Digite um código válido para buscar!');
       edtCodigoDisc.SetFocus;
       Exit;
     end;
 
-    // Busca a disciplina e carrega os dados nos campos se encontrada.
-    disciplina := FDisciplinaControlador.BuscarPorCodigo(Codigo);
+    disciplina := FDisciplinaControlador.BuscarPorCodigo(codigo);
     if Assigned(disciplina) then
       CarregarDadosDisciplina(disciplina)
     else
       ShowMessage('Disciplina não encontrada!');
+
   except
     on E: Exception do
       ShowMessage('Erro ao buscar disciplina: ' + E.Message);
@@ -858,22 +832,20 @@ end;
 procedure TFSistemaAcademico.lbxDisciplinasClick(Sender: TObject);
 var
   linha: string;
-  Codigo: Integer;
+  codigo: Integer;
   disciplina: TDisciplina;
 begin
   try
-    // Se um item da ListBox for clicado, extrai o código e carrega os dados.
     if lbxDisciplinas.ItemIndex >= 0 then
     begin
       linha := lbxDisciplinas.Items[lbxDisciplinas.ItemIndex];
-      // Extrai o código da string formatada.
       if Pos('Código: ', linha) > 0 then
       begin
         linha := Copy(linha, Pos('Código: ', linha) + 8, Length(linha));
         linha := Copy(linha, 1, Pos(' -', linha) - 1);
-        if TryStrToInt(linha, Codigo) then
-        begin
-          disciplina := FDisciplinaControlador.BuscarPorCodigo(Codigo);
+        if TryStrToInt(linha, codigo) then
+begin
+          disciplina := FDisciplinaControlador.BuscarPorCodigo(codigo);
           CarregarDadosDisciplina(disciplina);
         end;
       end;
@@ -890,11 +862,10 @@ end;
 
 procedure TFSistemaAcademico.btnIncluirTurmaClick(Sender: TObject);
 var
-  Codigo, codigoProf, codigoDisc: Integer;
+  codigo, codigoProf, codigoDisc: Integer;
 begin
   try
-    // Valida os códigos de entrada.
-    if not TryStrToInt(edtCodigoTurma.Text, Codigo) then
+    if not TryStrToInt(edtCodigoTurma.Text, codigo) then
     begin
       ShowMessage('Código deve ser um número inteiro válido!');
       edtCodigoTurma.SetFocus;
@@ -915,7 +886,7 @@ begin
       Exit;
     end;
 
-    // Verifica a existência do professor e da disciplina antes de criar a turma.
+    // Verifica se o professor existe
     if not Assigned(FProfessorControlador.BuscarPorCodigo(codigoProf)) then
     begin
       ShowMessage('Professor não encontrado!');
@@ -923,6 +894,7 @@ begin
       Exit;
     end;
 
+    // Verifica se a disciplina existe
     if not Assigned(FDisciplinaControlador.BuscarPorCodigo(codigoDisc)) then
     begin
       ShowMessage('Disciplina não encontrada!');
@@ -930,13 +902,16 @@ begin
       Exit;
     end;
 
-    // Chama o controlador para incluir a turma.
-    if FTurmaControlador.Incluir(Codigo, codigoProf, codigoDisc) then
+    if FTurmaControlador.Incluir(codigo, codigoProf, codigoDisc) then
     begin
       ShowMessage('Turma incluída com sucesso!');
-      LimparCamposTurma; // Limpa os campos da interface.
-      btnListarTurmaClick(nil); // Atualiza a ListBox.
-    end;
+      LimparCamposTurma;
+      btnListarTurmaClick(nil);
+      FTurmaControlador.SalvarDados;
+    end
+    else
+      ShowMessage('Erro: Código já existe!');
+
   except
     on E: Exception do
       ShowMessage('Erro ao incluir turma: ' + E.Message);
@@ -946,7 +921,6 @@ end;
 procedure TFSistemaAcademico.btnListarTurmaClick(Sender: TObject);
 begin
   try
-    // Pede ao controlador para listar as turmas e preenche a ListBox.
     FTurmaControlador.Listar(lbxTurmas.Items);
   except
     on E: Exception do
@@ -956,11 +930,10 @@ end;
 
 procedure TFSistemaAcademico.btnAtualizarTurmaClick(Sender: TObject);
 var
-  Codigo, codigoProf, codigoDisc: Integer;
+  codigo, codigoProf, codigoDisc: Integer;
 begin
   try
-    // Valida se uma turma foi selecionada e os campos estão preenchidos.
-    if not TryStrToInt(edtCodigoTurma.Text, Codigo) then
+    if not TryStrToInt(edtCodigoTurma.Text, codigo) then
     begin
       ShowMessage('Selecione uma turma para atualizar!');
       Exit;
@@ -980,7 +953,7 @@ begin
       Exit;
     end;
 
-    // Verifica a existência do professor e da disciplina antes de atualizar a turma.
+    // Verifica se o professor existe
     if not Assigned(FProfessorControlador.BuscarPorCodigo(codigoProf)) then
     begin
       ShowMessage('Professor não encontrado!');
@@ -988,6 +961,7 @@ begin
       Exit;
     end;
 
+    // Verifica se a disciplina existe
     if not Assigned(FDisciplinaControlador.BuscarPorCodigo(codigoDisc)) then
     begin
       ShowMessage('Disciplina não encontrada!');
@@ -995,15 +969,16 @@ begin
       Exit;
     end;
 
-    // Chama o controlador para atualizar a turma.
-    if FTurmaControlador.Atualizar(Codigo, codigoProf, codigoDisc) then
+    if FTurmaControlador.Atualizar(codigo, codigoProf, codigoDisc) then
     begin
       ShowMessage('Turma atualizada com sucesso!');
-      LimparCamposTurma; // Limpa os campos da interface.
-      btnListarTurmaClick(nil); // Atualiza a ListBox.
+      LimparCamposTurma;
+      btnListarTurmaClick(nil);
+      FTurmaControlador.SalvarDados;
     end
     else
       ShowMessage('Erro: Turma não encontrada!');
+
   except
     on E: Exception do
       ShowMessage('Erro ao atualizar turma: ' + E.Message);
@@ -1012,30 +987,28 @@ end;
 
 procedure TFSistemaAcademico.btnExcluirTurmaClick(Sender: TObject);
 var
-  Codigo: Integer;
+  codigo: Integer;
 begin
   try
-    // Valida se uma turma foi selecionada.
-    if not TryStrToInt(edtCodigoTurma.Text, Codigo) then
+    if not TryStrToInt(edtCodigoTurma.Text, codigo) then
     begin
       ShowMessage('Selecione uma turma para excluir!');
       Exit;
     end;
 
-    // Pede confirmação ao usuário.
-    if MessageDlg('Confirma a exclusão da turma?', mtConfirmation,
-      [mbYes, mbNo], 0) = mrYes then
+    if MessageDlg('Confirma a exclusão da turma?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
-      // Chama o controlador para excluir a turma.
-      if FTurmaControlador.Excluir(Codigo) then
+      if FTurmaControlador.Excluir(codigo) then
       begin
         ShowMessage('Turma excluída com sucesso!');
-        LimparCamposTurma; // Limpa os campos da interface.
-        btnListarTurmaClick(nil); // Atualiza a ListBox.
+        LimparCamposTurma;
+        btnListarTurmaClick(nil);
+        FTurmaControlador.SalvarDados;
       end
       else
         ShowMessage('Erro: Turma não encontrada!');
     end;
+
   except
     on E: Exception do
       ShowMessage('Erro ao excluir turma: ' + E.Message);
@@ -1044,24 +1017,23 @@ end;
 
 procedure TFSistemaAcademico.btnBuscarTurmaClick(Sender: TObject);
 var
-  Codigo: Integer;
+  codigo: Integer;
   turma: TTurma;
 begin
   try
-    // Valida o código para a busca.
-    if not TryStrToInt(edtCodigoTurma.Text, Codigo) then
+    if not TryStrToInt(edtCodigoTurma.Text, codigo) then
     begin
       ShowMessage('Digite um código válido para buscar!');
       edtCodigoTurma.SetFocus;
       Exit;
     end;
 
-    // Busca a turma e carrega os dados nos campos se encontrada.
-    turma := FTurmaControlador.BuscarPorCodigo(Codigo);
+    turma := FTurmaControlador.BuscarPorCodigo(codigo);
     if Assigned(turma) then
       CarregarDadosTurma(turma)
     else
       ShowMessage('Turma não encontrada!');
+
   except
     on E: Exception do
       ShowMessage('Erro ao buscar turma: ' + E.Message);
@@ -1071,22 +1043,20 @@ end;
 procedure TFSistemaAcademico.lbxTurmasClick(Sender: TObject);
 var
   linha: string;
-  Codigo: Integer;
+  codigo: Integer;
   turma: TTurma;
 begin
   try
-    // Se um item da ListBox for clicado, extrai o código e carrega os dados.
     if lbxTurmas.ItemIndex >= 0 then
     begin
       linha := lbxTurmas.Items[lbxTurmas.ItemIndex];
-      // Extrai o código da string formatada.
       if Pos('Código: ', linha) > 0 then
       begin
         linha := Copy(linha, Pos('Código: ', linha) + 8, Length(linha));
         linha := Copy(linha, 1, Pos(' -', linha) - 1);
-        if TryStrToInt(linha, Codigo) then
+        if TryStrToInt(linha, codigo) then
         begin
-          turma := FTurmaControlador.BuscarPorCodigo(Codigo);
+          turma := FTurmaControlador.BuscarPorCodigo(codigo);
           CarregarDadosTurma(turma);
         end;
       end;
@@ -1103,18 +1073,17 @@ end;
 
 procedure TFSistemaAcademico.btnIncluirMatClick(Sender: TObject);
 var
-  Codigo, CodigoTurma, codigoEst: Integer;
+  codigo, codigoTurma, codigoEst: Integer;
 begin
   try
-    // Validação de dados de entrada.
-    if not TryStrToInt(edtCodigoMat.Text, Codigo) then
+    if not TryStrToInt(edtCodigoMat.Text, codigo) then
     begin
       ShowMessage('Código deve ser um número inteiro válido!');
       edtCodigoMat.SetFocus;
       Exit;
     end;
 
-    if not TryStrToInt(edtCodigoTurmaMat.Text, CodigoTurma) then
+    if not TryStrToInt(edtCodigoTurmaMat.Text, codigoTurma) then
     begin
       ShowMessage('Código da turma deve ser um número inteiro válido!');
       edtCodigoTurmaMat.SetFocus;
@@ -1128,14 +1097,15 @@ begin
       Exit;
     end;
 
-    // Verifica a existência da turma e do estudante antes de criar a matrícula.
-    if not Assigned(FTurmaControlador.BuscarPorCodigo(CodigoTurma)) then
+    // Verifica se a turma existe
+    if not Assigned(FTurmaControlador.BuscarPorCodigo(codigoTurma)) then
     begin
       ShowMessage('Turma não encontrada!');
       edtCodigoTurmaMat.SetFocus;
       Exit;
     end;
 
+    // Verifica se o estudante existe
     if not Assigned(FEstudanteControlador.BuscarPorCodigo(codigoEst)) then
     begin
       ShowMessage('Estudante não encontrado!');
@@ -1143,13 +1113,16 @@ begin
       Exit;
     end;
 
-    // Chama o controlador para incluir a matrícula.
-    if FMatriculaControlador.Incluir(Codigo, CodigoTurma, codigoEst) then
+    if FMatriculaControlador.Incluir(codigo, codigoTurma, codigoEst) then
     begin
       ShowMessage('Matrícula incluída com sucesso!');
-      LimparCamposMatricula; // Limpa os campos da interface.
-      btnListarMatClick(nil); // Atualiza a ListBox.
-    end;
+      LimparCamposMatricula;
+      btnListarMatClick(nil);
+      FMatriculaControlador.SalvarDados;
+    end
+    else
+      ShowMessage('Erro: Código já existe!');
+
   except
     on E: Exception do
       ShowMessage('Erro ao incluir matrícula: ' + E.Message);
@@ -1159,7 +1132,6 @@ end;
 procedure TFSistemaAcademico.btnListarMatClick(Sender: TObject);
 begin
   try
-    // Pede ao controlador para listar as matrículas e preenche a ListBox.
     FMatriculaControlador.Listar(lbxMatriculas.Items);
   except
     on E: Exception do
@@ -1169,17 +1141,16 @@ end;
 
 procedure TFSistemaAcademico.btnAtualizarMatClick(Sender: TObject);
 var
-  Codigo, CodigoTurma, codigoEst: Integer;
+  codigo, codigoTurma, codigoEst: Integer;
 begin
   try
-    // Valida se uma matrícula foi selecionada e os campos estão preenchidos.
-    if not TryStrToInt(edtCodigoMat.Text, Codigo) then
+    if not TryStrToInt(edtCodigoMat.Text, codigo) then
     begin
       ShowMessage('Selecione uma matrícula para atualizar!');
       Exit;
     end;
 
-    if not TryStrToInt(edtCodigoTurmaMat.Text, CodigoTurma) then
+    if not TryStrToInt(edtCodigoTurmaMat.Text, codigoTurma) then
     begin
       ShowMessage('Código da turma deve ser um número inteiro válido!');
       edtCodigoTurmaMat.SetFocus;
@@ -1193,14 +1164,15 @@ begin
       Exit;
     end;
 
-    // Verifica a existência da turma e do estudante antes de atualizar a matrícula.
-    if not Assigned(FTurmaControlador.BuscarPorCodigo(CodigoTurma)) then
+    // Verifica se a turma existe
+    if not Assigned(FTurmaControlador.BuscarPorCodigo(codigoTurma)) then
     begin
       ShowMessage('Turma não encontrada!');
       edtCodigoTurmaMat.SetFocus;
       Exit;
     end;
 
+    // Verifica se o estudante existe
     if not Assigned(FEstudanteControlador.BuscarPorCodigo(codigoEst)) then
     begin
       ShowMessage('Estudante não encontrado!');
@@ -1208,15 +1180,16 @@ begin
       Exit;
     end;
 
-    // Chama o controlador para atualizar a matrícula.
-    if FMatriculaControlador.Atualizar(Codigo, CodigoTurma, codigoEst) then
+    if FMatriculaControlador.Atualizar(codigo, codigoTurma, codigoEst) then
     begin
       ShowMessage('Matrícula atualizada com sucesso!');
-      LimparCamposMatricula; // Limpa os campos da interface.
-      btnListarMatClick(nil); // Atualiza a ListBox.
+      LimparCamposMatricula;
+      btnListarMatClick(nil);
+      FMatriculaControlador.SalvarDados;
     end
     else
       ShowMessage('Erro: Matrícula não encontrada!');
+
   except
     on E: Exception do
       ShowMessage('Erro ao atualizar matrícula: ' + E.Message);
@@ -1225,30 +1198,28 @@ end;
 
 procedure TFSistemaAcademico.btnExcluirMatClick(Sender: TObject);
 var
-  Codigo: Integer;
+  codigo: Integer;
 begin
   try
-    // Valida se uma matrícula foi selecionada.
-    if not TryStrToInt(edtCodigoMat.Text, Codigo) then
+    if not TryStrToInt(edtCodigoMat.Text, codigo) then
     begin
       ShowMessage('Selecione uma matrícula para excluir!');
       Exit;
     end;
 
-    // Pede confirmação ao usuário.
-    if MessageDlg('Confirma a exclusão da matrícula?', mtConfirmation,
-      [mbYes, mbNo], 0) = mrYes then
+    if MessageDlg('Confirma a exclusão da matrícula?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
     begin
-      // Chama o controlador para excluir a matrícula.
-      if FMatriculaControlador.Excluir(Codigo) then
+      if FMatriculaControlador.Excluir(codigo) then
       begin
         ShowMessage('Matrícula excluída com sucesso!');
-        LimparCamposMatricula; // Limpa os campos da interface.
-        btnListarMatClick(nil); // Atualiza a ListBox.
+        LimparCamposMatricula;
+        btnListarMatClick(nil);
+        FMatriculaControlador.SalvarDados;
       end
       else
         ShowMessage('Erro: Matrícula não encontrada!');
     end;
+
   except
     on E: Exception do
       ShowMessage('Erro ao excluir matrícula: ' + E.Message);
@@ -1257,24 +1228,23 @@ end;
 
 procedure TFSistemaAcademico.btnBuscarMatClick(Sender: TObject);
 var
-  Codigo: Integer;
+  codigo: Integer;
   matricula: TMatricula;
 begin
   try
-    // Valida o código para a busca.
-    if not TryStrToInt(edtCodigoMat.Text, Codigo) then
+    if not TryStrToInt(edtCodigoMat.Text, codigo) then
     begin
       ShowMessage('Digite um código válido para buscar!');
       edtCodigoMat.SetFocus;
       Exit;
     end;
 
-    // Busca a matrícula e carrega os dados nos campos se encontrada.
-    matricula := FMatriculaControlador.BuscarPorCodigo(Codigo);
+    matricula := FMatriculaControlador.BuscarPorCodigo(codigo);
     if Assigned(matricula) then
       CarregarDadosMatricula(matricula)
     else
       ShowMessage('Matrícula não encontrada!');
+
   except
     on E: Exception do
       ShowMessage('Erro ao buscar matrícula: ' + E.Message);
@@ -1284,22 +1254,20 @@ end;
 procedure TFSistemaAcademico.lbxMatriculasClick(Sender: TObject);
 var
   linha: string;
-  Codigo: Integer;
+  codigo: Integer;
   matricula: TMatricula;
 begin
   try
-    // Se um item da ListBox for clicado, extrai o código e carrega os dados.
     if lbxMatriculas.ItemIndex >= 0 then
     begin
       linha := lbxMatriculas.Items[lbxMatriculas.ItemIndex];
-      // Extrai o código da string formatada.
       if Pos('Código: ', linha) > 0 then
       begin
         linha := Copy(linha, Pos('Código: ', linha) + 8, Length(linha));
         linha := Copy(linha, 1, Pos(' -', linha) - 1);
-        if TryStrToInt(linha, Codigo) then
+        if TryStrToInt(linha, codigo) then
         begin
-          matricula := FMatriculaControlador.BuscarPorCodigo(Codigo);
+          matricula := FMatriculaControlador.BuscarPorCodigo(codigo);
           CarregarDadosMatricula(matricula);
         end;
       end;

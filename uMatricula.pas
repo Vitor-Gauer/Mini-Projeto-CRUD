@@ -3,7 +3,8 @@
 interface
 
 uses
-  System.Classes, System.SysUtils, System.Generics.Collections;
+  System.Classes, System.SysUtils, System.Generics.Collections,
+  uEstudante, uProfessor, uDisciplina, uTurma;
 
 type
   // Classe modelo para a entidade Matrícula.
@@ -36,7 +37,7 @@ type
     function Atualizar(aCodigo, aCodigoTurma, aCodigoEstudante: Integer): Boolean; // Atualiza os códigos da turma e do estudante de uma matrícula existente e salva os dados.
     function Excluir(aCodigo: Integer): Boolean; // Remove uma matrícula da lista e salva os dados.
     function BuscarPorCodigo(aCodigo: Integer): TMatricula; // Busca e retorna uma matrícula específica pelo código.
-    procedure Listar(AStringList: TStrings); // Preenche um TStrings (como de um TListBox) com a representação em string de cada matrícula.
+    procedure Listar(AStringList: TStrings; ATurmaControlador: TTurmaControlador; AEstudanteControlador: TEstudanteControlador; AProfessorControlador: TProfessorControlador; ADisciplinaControlador: TDisciplinaControlador); // Preenche um TStrings (como de um TListBox) com a representação em string de cada matrícula.
 
     procedure CarregarDados; // Carrega os dados das matrículas do arquivo para a lista.
     procedure SalvarDados; // Salva os dados da lista de matrículas no arquivo.
@@ -212,13 +213,46 @@ begin
     Result := FLista[indice];
 end;
 
-procedure TMatriculaControlador.Listar(AStringList: TStrings);
+procedure TMatriculaControlador.Listar(AStringList: TStrings; ATurmaControlador: TTurmaControlador; AEstudanteControlador: TEstudanteControlador; AProfessorControlador: TProfessorControlador; ADisciplinaControlador: TDisciplinaControlador);
 var
   matricula: TMatricula;
+  NomeEstudante: string;
+  NomeTurma: string; // Nome da disciplina da turma
+  Estudante: TEstudante;
+  Turma: TTurma;
+  Disciplina: TDisciplina;
 begin
   AStringList.Clear;
   for matricula in FLista do
-    AStringList.Add(matricula.ToString);
+  begin
+    NomeEstudante := 'Estudante não encontrado'; // Valor padrão
+    NomeTurma := 'Turma/Disciplina não encontrada'; // Valor padrão
+
+    // Busca o Estudante
+    Estudante := AEstudanteControlador.BuscarPorCodigo(matricula.CodigoEstudante);
+    if Assigned(Estudante) then
+      NomeEstudante := Estudante.Nome;
+
+    // Busca a Turma para obter o código da disciplina
+    Turma := ATurmaControlador.BuscarPorCodigo(matricula.CodigoTurma);
+    if Assigned(Turma) then
+    begin
+      // Busca a Disciplina da Turma para obter o nome
+      Disciplina := ADisciplinaControlador.BuscarPorCodigo(Turma.CodigoDisciplina);
+      if Assigned(Disciplina) then
+        NomeTurma := Disciplina.Nome
+      else
+        NomeTurma := Format('Disciplina Cód: %d', [Turma.CodigoDisciplina]); // Fallback
+    end
+    else
+    begin
+       NomeTurma := Format('Turma Cód: %d', [matricula.CodigoTurma]); // Fallback
+    end;
+
+    // Formata a string para exibição rica
+    AStringList.Add(Format('Matrícula (Cód: %d) - Estudante: %s (Cód: %d) - Turma: %s (Cód: %d)',
+      [matricula.Codigo, NomeEstudante, matricula.CodigoEstudante, NomeTurma, matricula.CodigoTurma]));
+  end;
 end;
 
 procedure TMatriculaControlador.CarregarDados;

@@ -1,6 +1,8 @@
 object FSistemaAcademico: TFSistemaAcademico
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Sistema Acad'#234'mico'
   ClientHeight = 611
   ClientWidth = 883

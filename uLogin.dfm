@@ -4,7 +4,7 @@ object FLocalLogin: TFLocalLogin
   BorderStyle = bsDialog
   Caption = 'Login - Sistema Acad'#234'mico'
   ClientHeight = 180
-  ClientWidth = 300
+  ClientWidth = 282
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,10 +15,14 @@ object FLocalLogin: TFLocalLogin
   OnShow = FormShow
   TextHeight = 13
   object lblTitulo: TLabel
-    Left = 90
+    AlignWithMargins = True
+    Left = 3
     Top = 15
-    Width = 151
+    Width = 276
     Height = 19
+    Margins.Top = 15
+    Align = alTop
+    Alignment = taCenter
     Caption = 'Acesso ao Sistema'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -26,30 +30,31 @@ object FLocalLogin: TFLocalLogin
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    ExplicitWidth = 151
   end
   object lblUsuario: TLabel
-    Left = 30
+    Left = 22
     Top = 60
     Width = 40
     Height = 13
     Caption = 'Usu'#225'rio:'
   end
   object lblSenha: TLabel
-    Left = 30
+    Left = 22
     Top = 90
     Width = 34
     Height = 13
     Caption = 'Senha:'
   end
   object edtUsuario: TEdit
-    Left = 80
+    Left = 72
     Top = 57
     Width = 180
     Height = 21
     TabOrder = 0
   end
   object edtSenha: TEdit
-    Left = 80
+    Left = 72
     Top = 87
     Width = 180
     Height = 21
@@ -57,7 +62,7 @@ object FLocalLogin: TFLocalLogin
     TabOrder = 1
   end
   object btnEntrar: TButton
-    Left = 80
+    Left = 56
     Top = 125
     Width = 75
     Height = 25
@@ -66,7 +71,7 @@ object FLocalLogin: TFLocalLogin
     OnClick = btnEntrarClick
   end
   object btnCancelar: TButton
-    Left = 185
+    Left = 161
     Top = 125
     Width = 75
     Height = 25

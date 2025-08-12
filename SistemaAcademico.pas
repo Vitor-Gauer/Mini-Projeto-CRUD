@@ -179,10 +179,6 @@ type
     procedure btnRelatorioDisciplinasClick(Sender: TObject);
     procedure btnRelatorioMatriculasClick(Sender: TObject);
 
-// --------------------------------------------------------------------------------------------------
-// Fim dos
-// --------------------------------------------------------------------------------------------------
-
   private
     { Private declarations }
     // Variáveis e métodos privados
@@ -374,7 +370,8 @@ end;
 procedure TFSistemaAcademico.AtualizarListaTurmas;
 begin
   try
-    FTurmaControlador.Listar(lbxTurmas.Items);
+    // Passa os controladores de Professor e Disciplina para obter os nomes
+    FTurmaControlador.Listar(lbxTurmas.Items, FProfessorControlador, FDisciplinaControlador);
   except
     on E: Exception do
       ShowMessage('Erro ao atualizar lista de turmas: ' + E.Message);
@@ -384,7 +381,8 @@ end;
 procedure TFSistemaAcademico.AtualizarListaMatriculas;
 begin
   try
-    FMatriculaControlador.Listar(lbxMatriculas.Items);
+    // Passa todos os controladores necessários para obter os nomes
+    FMatriculaControlador.Listar(lbxMatriculas.Items, FTurmaControlador, FEstudanteControlador, FProfessorControlador, FDisciplinaControlador);
   except
     on E: Exception do
       ShowMessage('Erro ao atualizar lista de matrículas: ' + E.Message);
@@ -1525,5 +1523,3 @@ end;
 // --- MÉTODOS btnListar...Click REMOVIDOS ---
 
 end.
-
-```

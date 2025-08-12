@@ -3,7 +3,7 @@
 interface
 
 uses
-  System.Classes, System.SysUtils, System.Generics.Collections;
+  System.Classes, System.SysUtils, System.Generics.Collections, uProfessor, uDisciplina;
 
 type
   // Classe modelo para a entidade Turma.
@@ -36,7 +36,7 @@ type
     function Atualizar(aCodigo, aCodigoProfessor, aCodigoDisciplina: Integer): Boolean; // Atualiza os códigos do professor e da disciplina de uma turma existente e salva os dados.
     function Excluir(aCodigo: Integer): Boolean; // Remove uma turma da lista e salva os dados.
     function BuscarPorCodigo(aCodigo: Integer): TTurma; // Busca e retorna uma turma específica pelo código.
-    procedure Listar(AStringList: TStrings); // Preenche um TStrings (como de um TListBox) com a representação em string de cada turma.
+    procedure Listar(AStringList: TStrings; AProfessorControlador: TProfessorControlador; ADisciplinaControlador: TDisciplinaControlador); // Preenche um TStrings (como de um TListBox) com a representação em string de cada turma.
 
     procedure CarregarDados; // Carrega os dados das turmas do arquivo para a lista.
     procedure SalvarDados; // Salva os dados da lista de turmas no arquivo.
@@ -60,6 +60,9 @@ begin
 end;
 
 function TTurma.ToString: string;
+var
+  NomeProfessor: string;
+  NomeDisciplina: string;
 begin
   Result := Format('Código: %d - Professor: %d - Disciplina: %d',
     [FCodigo, FCodigoProfessor, FCodigoDisciplina]);
@@ -212,13 +215,34 @@ begin
     Result := FLista[indice];
 end;
 
-procedure TTurmaControlador.Listar(AStringList: TStrings);
+procedure TTurmaControlador.Listar(AStringList: TStrings; AProfessorControlador: TProfessorControlador; ADisciplinaControlador: TDisciplinaControlador);
 var
   turma: TTurma;
+  NomeProfessor: string;
+  NomeDisciplina: string;
+  Professor: TProfessor;
+  Disciplina: TDisciplina;
 begin
   AStringList.Clear;
   for turma in FLista do
-    AStringList.Add(turma.ToString);
+  begin
+    NomeProfessor := 'Professor não encontrado'; // Valor padrão
+    NomeDisciplina := 'Disciplina não encontrada'; // Valor padrão
+
+    // Busca o Professor
+    Professor := AProfessorControlador.BuscarPorCodigo(turma.CodigoProfessor);
+    if Assigned(Professor) then
+      NomeProfessor := Professor.Nome;
+
+    // Busca a Disciplina
+    Disciplina := ADisciplinaControlador.BuscarPorCodigo(turma.CodigoDisciplina);
+    if Assigned(Disciplina) then
+      NomeDisciplina := Disciplina.Nome;
+
+    // Formata a string para exibição rica
+    AStringList.Add(Format('Turma (Cód: %d) - Prof. %s (Cód: %d) - Disc. %s (Cód: %d)',
+      [turma.Codigo, NomeProfessor, turma.CodigoProfessor, NomeDisciplina, turma.CodigoDisciplina]));
+  end;
 end;
 
 procedure TTurmaControlador.CarregarDados;

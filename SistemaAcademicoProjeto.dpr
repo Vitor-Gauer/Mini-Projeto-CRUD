@@ -3,7 +3,8 @@ program SistemaAcademicoProjeto;
 uses
   Vcl.Forms,
   SistemaAcademico in 'SistemaAcademico.pas' {TFSistemaAcademico},
-  uLogin in 'uLogin.pas' {FLocalLogin};
+  uLogin in 'uLogin.pas' {FLocalLogin: TFrame},
+  uCadastroUsuarios in 'uCadastroUsuarios.pas' {Frame1: TFrame};
 
 {$R *.res}
 

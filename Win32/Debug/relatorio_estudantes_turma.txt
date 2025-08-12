@@ -1,0 +1,6 @@
+RELATÓRIO: ESTUDANTES POR TURMA
+
+Turma Cód: 1 | Disciplina: Qualidade d Acadêmico | Professor: Flávio istema
+--- Estudantes:
+  Cód: 1 | Nome: Atualante
+

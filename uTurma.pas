@@ -40,6 +40,9 @@ type
 
     procedure CarregarDados; // Carrega os dados das turmas do arquivo para a lista.
     procedure SalvarDados; // Salva os dados da lista de turmas no arquivo.
+
+    // Novo método: Retorna a lista completa para iteração em relatórios
+    function ObterTodos: TObjectList<TTurma>;
   end;
 
 implementation
@@ -50,7 +53,7 @@ implementation
 
 constructor TTurma.Create(aCodigo, aCodigoProfessor, aCodigoDisciplina: Integer);
 begin
-  inherited Create; // Chama o construtor da classe base.
+  inherited Create;
   FCodigo := aCodigo;
   FCodigoProfessor := aCodigoProfessor;
   FCodigoDisciplina := aCodigoDisciplina;
@@ -58,7 +61,6 @@ end;
 
 function TTurma.ToString: string;
 begin
-  // Formata o resultado para uma string amigável, facilitando a exibição.
   Result := Format('Código: %d - Professor: %d - Disciplina: %d',
     [FCodigo, FCodigoProfessor, FCodigoDisciplina]);
 end;
@@ -70,14 +72,13 @@ end;
 constructor TTurmaControlador.Create;
 begin
   inherited Create;
-  // Inicializa a lista de objetos e o nome do arquivo. O parâmetro "True" garante que os objetos da lista serão destruídos automaticamente.
   FLista := TObjectList<TTurma>.Create(True);
   FArquivo := 'turmas.txt';
 end;
 
 destructor TTurmaControlador.Destroy;
 begin
-  FLista.Free; // Libera a memória alocada para a lista e os objetos TTurma.
+  FLista.Free;
   inherited Destroy;
 end;
 
@@ -85,13 +86,12 @@ function TTurmaControlador.BuscarIndice(aCodigo: Integer): Integer;
 var
   i: Integer;
 begin
-  Result := -1; // Inicializa o resultado como -1 (não encontrado).
-  // Itera sobre a lista para encontrar o índice da turma com o código especificado.
+  Result := -1;
   for i := 0 to FLista.Count - 1 do
   begin
     if FLista[i].Codigo = aCodigo then
     begin
-      Result := i; // Retorna o índice se encontrar.
+      Result := i;
       Break;
     end;
   end;
@@ -103,13 +103,12 @@ var
   maiorCodigo: Integer;
 begin
   maiorCodigo := 0;
-  // Itera sobre a lista para encontrar o maior código existente.
   for i := 0 to FLista.Count - 1 do
   begin
     if FLista[i].Codigo > maiorCodigo then
       maiorCodigo := FLista[i].Codigo;
   end;
-  Result := maiorCodigo + 1; // O próximo código é o maior encontrado mais 1.
+  Result := maiorCodigo + 1;
 end;
 
 function TTurmaControlador.ExisteCombinacao(aCodigoProfessor, aCodigoDisciplina: Integer): Boolean;
@@ -117,7 +116,6 @@ var
   i: Integer;
 begin
   Result := False;
-  // Itera sobre a lista para verificar se a combinação de professor e disciplina já existe.
   for i := 0 to FLista.Count - 1 do
   begin
     if (FLista[i].CodigoProfessor = aCodigoProfessor) and
@@ -134,24 +132,19 @@ var
   turma: TTurma;
 begin
   Result := False;
-  // Lança exceção se o código já existir.
   if BuscarIndice(aCodigo) <> -1 then
     raise Exception.Create('Código da turma já existe');
-  // Lança exceção se o código do professor for inválido.
   if aCodigoProfessor <= 0 then
     raise Exception.Create('Código do professor deve ser maior que zero');
-  // Lança exceção se o código da disciplina for inválido.
   if aCodigoDisciplina <= 0 then
     raise Exception.Create('Código da disciplina deve ser maior que zero');
-  // Lança exceção se a combinação de professor e disciplina já existir.
   if ExisteCombinacao(aCodigoProfessor, aCodigoDisciplina) then
     raise Exception.Create('Já existe uma turma com esta combinação de professor e disciplina');
 
   try
-    // Cria um novo objeto TTurma e o adiciona à lista.
     turma := TTurma.Create(aCodigo, aCodigoProfessor, aCodigoDisciplina);
     FLista.Add(turma);
-    SalvarDados; // Salva as alterações no arquivo.
+    SalvarDados;
     Result := True;
   except
     on E: Exception do
@@ -166,18 +159,13 @@ var
 begin
   Result := False;
   indice := BuscarIndice(aCodigo);
-
-  // Lança exceção se a turma não for encontrada.
   if indice < 0 then
     raise Exception.Create('Turma não encontrada');
-  // Lança exceção se o novo código do professor for inválido.
   if aCodigoProfessor <= 0 then
     raise Exception.Create('Código do professor deve ser maior que zero');
-  // Lança exceção se o novo código da disciplina for inválido.
   if aCodigoDisciplina <= 0 then
     raise Exception.Create('Código da disciplina deve ser maior que zero');
 
-  // Itera para verificar se a nova combinação de professor e disciplina já existe em outra turma.
   for i := 0 to FLista.Count - 1 do
   begin
     if (i <> indice) and (FLista[i].CodigoProfessor = aCodigoProfessor) and (FLista[i].CodigoDisciplina = aCodigoDisciplina) then
@@ -185,9 +173,9 @@ begin
   end;
 
   try
-    FLista[indice].CodigoProfessor := aCodigoProfessor; // Atualiza o código do professor.
-    FLista[indice].CodigoDisciplina := aCodigoDisciplina; // Atualiza o código da disciplina.
-    SalvarDados; // Salva as alterações no arquivo.
+    FLista[indice].CodigoProfessor := aCodigoProfessor;
+    FLista[indice].CodigoDisciplina := aCodigoDisciplina;
+    SalvarDados;
     Result := True;
   except
     on E: Exception do
@@ -201,12 +189,11 @@ var
 begin
   Result := False;
   indice := BuscarIndice(aCodigo);
-  // Se a turma for encontrada, a exclui.
   if indice >= 0 then
   begin
     try
-      FLista.Delete(indice); // Exclui a turma da lista (libera a memória automaticamente).
-      SalvarDados; // Salva as alterações no arquivo.
+      FLista.Delete(indice);
+      SalvarDados;
       Result := True;
     except
       on E: Exception do
@@ -221,7 +208,6 @@ var
 begin
   Result := nil;
   indice := BuscarIndice(aCodigo);
-  // Retorna o objeto TTurma se ele for encontrado na lista.
   if indice >= 0 then
     Result := FLista[indice];
 end;
@@ -231,7 +217,6 @@ var
   turma: TTurma;
 begin
   AStringList.Clear;
-  // Itera sobre a lista de turmas e adiciona a representação em string de cada uma ao AStringList.
   for turma in FLista do
     AStringList.Add(turma.ToString);
 end;
@@ -242,25 +227,20 @@ var
   turma: TTurma;
   codigo, codigoProfessor, codigoDisciplina: Integer;
 begin
-  // Sai se o arquivo de dados não existir.
   if not FileExists(FArquivo) then Exit;
-  // Cria um TFileStream para ler o arquivo.
   F := TFileStream.Create(FArquivo, fmOpenRead);
   try
-    FLista.Clear; // Limpa a lista atual antes de carregar os novos dados.
-    // Lê o arquivo sequencialmente enquanto houver dados.
+    FLista.Clear;
     while F.Position < F.Size do
     begin
-      // Lê o código, o código do professor e o código da disciplina, respectivamente.
       F.Read(codigo, SizeOf(Integer));
       F.Read(codigoProfessor, SizeOf(Integer));
       F.Read(codigoDisciplina, SizeOf(Integer));
-      // Cria um novo objeto TTurma com os dados lidos e o adiciona à lista.
       turma := TTurma.Create(codigo, codigoProfessor, codigoDisciplina);
       FLista.Add(turma);
     end;
   finally
-    F.Free; // Garante que o FileStream seja liberado.
+    F.Free;
   end;
 end;
 
@@ -269,20 +249,26 @@ var
   F: TFileStream;
   turma: TTurma;
 begin
-  // Cria um TFileStream para escrever no arquivo, substituindo o conteúdo existente.
   F := TFileStream.Create(FArquivo, fmCreate);
   try
-    // Itera sobre a lista de turmas e escreve os dados de cada uma no arquivo.
     for turma in FLista do
     begin
-      // Escreve o código, o código do professor e o código da disciplina.
       F.Write(turma.Codigo, SizeOf(Integer));
       F.Write(turma.CodigoProfessor, SizeOf(Integer));
       F.Write(turma.CodigoDisciplina, SizeOf(Integer));
     end;
   finally
-    F.Free; // Garante que o FileStream seja liberado.
+    F.Free;
   end;
+end;
+
+// --------------------------------------------------------------------------------------------------
+// Novo método: ObterTodos
+// --------------------------------------------------------------------------------------------------
+
+function TTurmaControlador.ObterTodos: TObjectList<TTurma>;
+begin
+  Result := FLista;
 end;
 
 end.

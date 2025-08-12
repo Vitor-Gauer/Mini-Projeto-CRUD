@@ -2,7 +2,8 @@ program SistemaAcademicoProjeto;
 
 uses
   Vcl.Forms,
-  SistemaAcademico in 'SistemaAcademico.pas' {Form1};
+  SistemaAcademico in 'SistemaAcademico.pas' {TFSistemaAcademico},
+  uLogin in 'uLogin.pas' {FLocalLogin};
 
 {$R *.res}
 

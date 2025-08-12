@@ -2,8 +2,8 @@ object FSistemaAcademico: TFSistemaAcademico
   Left = 0
   Top = 0
   Caption = 'Sistema Acad'#234'mico'
-  ClientHeight = 600
-  ClientWidth = 900
+  ClientHeight = 611
+  ClientWidth = 883
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,108 +13,132 @@ object FSistemaAcademico: TFSistemaAcademico
   Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  DesignSize = (
-    900
-    600)
   TextHeight = 13
   object pgcAbasDoForm: TPageControl
-    Left = 8
-    Top = 8
-    Width = 884
-    Height = 584
-    ActivePage = tabDisciplinas
-    Anchors = [akLeft, akTop, akRight, akBottom]
+    Left = 0
+    Top = 0
+    Width = 883
+    Height = 611
+    ActivePage = tabEstudantes
+    Align = alClient
     TabOrder = 0
     object tabEstudantes: TTabSheet
       Caption = 'Estudantes'
       object pnlEstudantes: TPanel
         Left = 0
         Top = 0
-        Width = 876
-        Height = 556
+        Width = 875
+        Height = 583
         Align = alClient
         TabOrder = 0
         object lblCodigoEst: TLabel
           Left = 16
           Top = 16
-          Width = 33
+          Width = 37
           Height = 13
-          Caption = 'C'#243'digo'
+          Caption = 'C'#243'digo:'
         end
         object lblNomeEst: TLabel
           Left = 16
-          Top = 56
+          Top = 43
           Width = 31
           Height = 13
           Caption = 'Nome:'
         end
         object edtCodigoEst: TEdit
-          Left = 80
+          Left = 59
           Top = 13
           Width = 121
           Height = 21
           TabOrder = 0
         end
         object edtNomeEst: TEdit
-          Left = 80
-          Top = 53
-          Width = 300
+          Left = 59
+          Top = 40
+          Width = 285
           Height = 21
           TabOrder = 1
         end
         object btnIncluirEst: TButton
           Left = 16
-          Top = 90
+          Top = 75
           Width = 75
           Height = 25
           Caption = 'Incluir'
           TabOrder = 2
           OnClick = btnIncluirEstClick
         end
-        object btnListarEst: TButton
-          Left = 97
-          Top = 90
-          Width = 75
-          Height = 25
-          Caption = 'Listar'
-          TabOrder = 3
-          OnClick = btnListarEstClick
-        end
         object btnAtualizarEst: TButton
           Left = 178
-          Top = 90
+          Top = 75
           Width = 75
           Height = 25
           Caption = 'Atualizar'
-          TabOrder = 4
+          TabOrder = 3
           OnClick = btnAtualizarEstClick
         end
         object btnExcluirEst: TButton
           Left = 259
-          Top = 90
+          Top = 75
           Width = 75
           Height = 25
           Caption = 'Excluir'
-          TabOrder = 5
+          TabOrder = 4
           OnClick = btnExcluirEstClick
         end
         object btnBuscarEst: TButton
-          Left = 340
-          Top = 90
+          Left = 97
+          Top = 75
           Width = 75
           Height = 25
           Caption = 'Buscar'
-          TabOrder = 6
+          TabOrder = 5
           OnClick = btnBuscarEstClick
         end
         object lbxEstudantes: TListBox
           Left = 16
-          Top = 130
-          Width = 844
-          Height = 410
+          Top = 115
+          Width = 841
+          Height = 400
           ItemHeight = 13
-          TabOrder = 7
+          TabOrder = 6
           OnClick = lbxEstudantesClick
+        end
+        object btnRelatorioEstudantes: TButton
+          Left = 16
+          Top = 530
+          Width = 150
+          Height = 25
+          Caption = 'Estudantes por Turma'
+          TabOrder = 7
+          OnClick = btnRelatorioEstudantesClick
+        end
+        object btnRelatorioProfessores: TButton
+          Left = 170
+          Top = 530
+          Width = 150
+          Height = 25
+          Caption = 'Professores por Disciplina'
+          TabOrder = 8
+          OnClick = btnRelatorioProfessoresClick
+        end
+        object btnRelatorioDisciplinas: TButton
+          Left = 325
+          Top = 530
+          Width = 150
+          Height = 25
+          Caption = 'Disciplinas Ofertadas'
+          TabOrder = 9
+          OnClick = btnRelatorioDisciplinasClick
+        end
+        object btnRelatorioMatriculas: TButton
+          Left = 480
+          Top = 530
+          Width = 150
+          Height = 25
+          Caption = 'Matr'#237'culas por Estudante'
+          TabOrder = 10
+          OnClick = btnRelatorioMatriculasClick
         end
       end
     end
@@ -124,104 +148,95 @@ object FSistemaAcademico: TFSistemaAcademico
       object pnlProfessores: TPanel
         Left = 0
         Top = 0
-        Width = 876
-        Height = 556
+        Width = 875
+        Height = 583
         Align = alClient
         TabOrder = 0
         object lblCodigoProf: TLabel
           Left = 16
           Top = 16
-          Width = 33
+          Width = 37
           Height = 13
-          Caption = 'C'#243'digo'
+          Caption = 'C'#243'digo:'
         end
         object lblNomeProf: TLabel
           Left = 16
-          Top = 56
+          Top = 43
           Width = 31
           Height = 13
           Caption = 'Nome:'
         end
         object lblCPFProf: TLabel
           Left = 16
-          Top = 96
+          Top = 70
           Width = 23
           Height = 13
           Caption = 'CPF:'
         end
         object edtCodigoProf: TEdit
-          Left = 80
+          Left = 59
           Top = 13
           Width = 121
           Height = 21
           TabOrder = 0
         end
         object edtNomeProf: TEdit
-          Left = 80
-          Top = 53
-          Width = 300
+          Left = 59
+          Top = 40
+          Width = 285
           Height = 21
           TabOrder = 1
         end
         object edtCPFProf: TEdit
-          Left = 80
-          Top = 93
-          Width = 150
+          Left = 59
+          Top = 67
+          Width = 121
           Height = 21
           TabOrder = 2
         end
         object btnIncluirProf: TButton
           Left = 16
-          Top = 130
+          Top = 100
           Width = 75
           Height = 25
           Caption = 'Incluir'
           TabOrder = 3
           OnClick = btnIncluirProfClick
         end
-        object btnListarProf: TButton
-          Left = 97
-          Top = 130
-          Width = 75
-          Height = 25
-          Caption = 'Listar'
-          TabOrder = 4
-          OnClick = btnListarProfClick
-        end
         object btnAtualizarProf: TButton
           Left = 178
-          Top = 130
+          Top = 100
           Width = 75
           Height = 25
           Caption = 'Atualizar'
-          TabOrder = 5
+          TabOrder = 4
           OnClick = btnAtualizarProfClick
         end
         object btnExcluirProf: TButton
           Left = 259
-          Top = 130
+          Top = 100
           Width = 75
           Height = 25
           Caption = 'Excluir'
-          TabOrder = 6
+          TabOrder = 5
           OnClick = btnExcluirProfClick
         end
         object btnBuscarProf: TButton
-          Left = 340
-          Top = 130
+          Left = 97
+          Top = 100
           Width = 75
           Height = 25
           Caption = 'Buscar'
-          TabOrder = 7
+          TabOrder = 6
           OnClick = btnBuscarProfClick
         end
         object lbxProfessores: TListBox
           Left = 16
-          Top = 170
-          Width = 844
-          Height = 370
+          Top = 140
+          Width = 841
+          Height = 421
           ItemHeight = 13
-          TabOrder = 8
+          TabOrder = 7
           OnClick = lbxProfessoresClick
         end
       end
@@ -232,90 +247,81 @@ object FSistemaAcademico: TFSistemaAcademico
       object pnlDisciplinas: TPanel
         Left = 0
         Top = 0
-        Width = 876
-        Height = 556
+        Width = 875
+        Height = 583
         Align = alClient
         TabOrder = 0
         object lblCodigoDisc: TLabel
           Left = 16
           Top = 16
-          Width = 33
+          Width = 37
           Height = 13
-          Caption = 'C'#243'digo'
+          Caption = 'C'#243'digo:'
         end
         object lblNomeDisc: TLabel
           Left = 16
-          Top = 56
+          Top = 43
           Width = 31
           Height = 13
           Caption = 'Nome:'
         end
         object edtCodigoDisc: TEdit
-          Left = 80
+          Left = 59
           Top = 13
           Width = 121
           Height = 21
           TabOrder = 0
         end
         object edtNomeDisc: TEdit
-          Left = 80
-          Top = 53
-          Width = 300
+          Left = 59
+          Top = 40
+          Width = 285
           Height = 21
           TabOrder = 1
         end
         object btnIncluirDisc: TButton
           Left = 16
-          Top = 90
+          Top = 75
           Width = 75
           Height = 25
           Caption = 'Incluir'
           TabOrder = 2
           OnClick = btnIncluirDiscClick
         end
-        object btnListarDisc: TButton
-          Left = 97
-          Top = 90
-          Width = 75
-          Height = 25
-          Caption = 'Listar'
-          TabOrder = 3
-          OnClick = btnListarDiscClick
-        end
         object btnAtualizarDisc: TButton
           Left = 178
-          Top = 90
+          Top = 75
           Width = 75
           Height = 25
           Caption = 'Atualizar'
-          TabOrder = 4
+          TabOrder = 3
           OnClick = btnAtualizarDiscClick
         end
         object btnExcluirDisc: TButton
           Left = 259
-          Top = 90
+          Top = 75
           Width = 75
           Height = 25
           Caption = 'Excluir'
-          TabOrder = 5
+          TabOrder = 4
           OnClick = btnExcluirDiscClick
         end
         object btnBuscarDisc: TButton
-          Left = 340
-          Top = 90
+          Left = 97
+          Top = 75
           Width = 75
           Height = 25
           Caption = 'Buscar'
-          TabOrder = 6
+          TabOrder = 5
           OnClick = btnBuscarDiscClick
         end
         object lbxDisciplinas: TListBox
           Left = 16
-          Top = 130
-          Width = 844
-          Height = 410
+          Top = 115
+          Width = 841
+          Height = 446
           ItemHeight = 13
-          TabOrder = 7
+          TabOrder = 6
           OnClick = lbxDisciplinasClick
         end
       end
@@ -326,104 +332,95 @@ object FSistemaAcademico: TFSistemaAcademico
       object pnlTurmas: TPanel
         Left = 0
         Top = 0
-        Width = 876
-        Height = 556
+        Width = 875
+        Height = 583
         Align = alClient
         TabOrder = 0
         object lblCodigoTurma: TLabel
           Left = 16
           Top = 16
-          Width = 33
+          Width = 37
           Height = 13
-          Caption = 'C'#243'digo'
+          Caption = 'C'#243'digo:'
         end
         object lblCodigoProfTurma: TLabel
           Left = 16
-          Top = 56
-          Width = 86
+          Top = 43
+          Width = 50
           Height = 13
-          Caption = 'C'#243'digo Professor:'
+          Caption = 'Professor:'
         end
         object lblCodigoDiscTurma: TLabel
           Left = 16
-          Top = 96
-          Width = 83
+          Top = 70
+          Width = 47
           Height = 13
-          Caption = 'C'#243'digo Disciplina:'
+          Caption = 'Disciplina:'
         end
         object edtCodigoTurma: TEdit
-          Left = 120
+          Left = 74
           Top = 13
           Width = 121
           Height = 21
           TabOrder = 0
         end
         object edtCodigoProfTurma: TEdit
-          Left = 120
-          Top = 53
+          Left = 74
+          Top = 40
           Width = 121
           Height = 21
           TabOrder = 1
         end
         object edtCodigoDiscTurma: TEdit
-          Left = 120
-          Top = 93
+          Left = 74
+          Top = 67
           Width = 121
           Height = 21
           TabOrder = 2
         end
         object btnIncluirTurma: TButton
           Left = 16
-          Top = 130
+          Top = 100
           Width = 75
           Height = 25
           Caption = 'Incluir'
           TabOrder = 3
           OnClick = btnIncluirTurmaClick
         end
-        object btnListarTurma: TButton
-          Left = 97
-          Top = 130
-          Width = 75
-          Height = 25
-          Caption = 'Listar'
-          TabOrder = 4
-          OnClick = btnListarTurmaClick
-        end
         object btnAtualizarTurma: TButton
           Left = 178
-          Top = 130
+          Top = 100
           Width = 75
           Height = 25
           Caption = 'Atualizar'
-          TabOrder = 5
+          TabOrder = 4
           OnClick = btnAtualizarTurmaClick
         end
         object btnExcluirTurma: TButton
           Left = 259
-          Top = 130
+          Top = 100
           Width = 75
           Height = 25
           Caption = 'Excluir'
-          TabOrder = 6
+          TabOrder = 5
           OnClick = btnExcluirTurmaClick
         end
         object btnBuscarTurma: TButton
-          Left = 340
-          Top = 130
+          Left = 97
+          Top = 100
           Width = 75
           Height = 25
           Caption = 'Buscar'
-          TabOrder = 7
+          TabOrder = 6
           OnClick = btnBuscarTurmaClick
         end
         object lbxTurmas: TListBox
           Left = 16
-          Top = 170
-          Width = 844
-          Height = 370
+          Top = 140
+          Width = 841
+          Height = 421
           ItemHeight = 13
-          TabOrder = 8
+          TabOrder = 7
           OnClick = lbxTurmasClick
         end
       end
@@ -434,104 +431,95 @@ object FSistemaAcademico: TFSistemaAcademico
       object pnlMatriculas: TPanel
         Left = 0
         Top = 0
-        Width = 876
-        Height = 556
+        Width = 875
+        Height = 583
         Align = alClient
         TabOrder = 0
         object lblCodigoMat: TLabel
           Left = 16
           Top = 16
-          Width = 33
+          Width = 37
           Height = 13
-          Caption = 'C'#243'digo'
+          Caption = 'C'#243'digo:'
         end
         object lblCodigoTurmaMat: TLabel
           Left = 16
-          Top = 56
-          Width = 70
+          Top = 43
+          Width = 34
           Height = 13
-          Caption = 'C'#243'digo Turma:'
+          Caption = 'Turma:'
         end
         object lblCodigoEstMat: TLabel
           Left = 16
-          Top = 96
-          Width = 89
+          Top = 70
+          Width = 53
           Height = 13
-          Caption = 'C'#243'digo Estudante:'
+          Caption = 'Estudante:'
         end
         object edtCodigoMat: TEdit
-          Left = 120
+          Left = 74
           Top = 13
           Width = 121
           Height = 21
           TabOrder = 0
         end
         object edtCodigoTurmaMat: TEdit
-          Left = 120
-          Top = 53
+          Left = 74
+          Top = 40
           Width = 121
           Height = 21
           TabOrder = 1
         end
         object edtCodigoEstMat: TEdit
-          Left = 120
-          Top = 93
+          Left = 74
+          Top = 67
           Width = 121
           Height = 21
           TabOrder = 2
         end
         object btnIncluirMat: TButton
           Left = 16
-          Top = 130
+          Top = 100
           Width = 75
           Height = 25
           Caption = 'Incluir'
           TabOrder = 3
           OnClick = btnIncluirMatClick
         end
-        object btnListarMat: TButton
-          Left = 97
-          Top = 130
-          Width = 75
-          Height = 25
-          Caption = 'Listar'
-          TabOrder = 4
-          OnClick = btnListarMatClick
-        end
         object btnAtualizarMat: TButton
           Left = 178
-          Top = 130
+          Top = 100
           Width = 75
           Height = 25
           Caption = 'Atualizar'
-          TabOrder = 5
+          TabOrder = 4
           OnClick = btnAtualizarMatClick
         end
         object btnExcluirMat: TButton
           Left = 259
-          Top = 130
+          Top = 100
           Width = 75
           Height = 25
           Caption = 'Excluir'
-          TabOrder = 6
+          TabOrder = 5
           OnClick = btnExcluirMatClick
         end
         object btnBuscarMat: TButton
-          Left = 340
-          Top = 130
+          Left = 97
+          Top = 100
           Width = 75
           Height = 25
           Caption = 'Buscar'
-          TabOrder = 7
+          TabOrder = 6
           OnClick = btnBuscarMatClick
         end
         object lbxMatriculas: TListBox
           Left = 16
-          Top = 170
-          Width = 844
-          Height = 370
+          Top = 140
+          Width = 841
+          Height = 421
           ItemHeight = 13
-          TabOrder = 8
+          TabOrder = 7
           OnClick = lbxMatriculasClick
         end
       end

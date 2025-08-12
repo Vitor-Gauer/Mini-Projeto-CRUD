@@ -124,8 +124,13 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="SistemaAcademico.pas">
-            <Form>Form1</Form>
+            <Form>TFSistemaAcademico</Form>
             <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uLogin.pas">
+            <Form>FLocalLogin</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

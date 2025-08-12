@@ -41,6 +41,9 @@ type
 
     procedure CarregarDados; // Carrega os dados dos professores do arquivo para a lista.
     procedure SalvarDados; // Salva os dados da lista de professores no arquivo.
+
+    // Novo método: Retorna a lista completa para iteração em relatórios
+    function ObterTodos: TObjectList<TProfessor>;
   end;
 
 implementation
@@ -51,7 +54,7 @@ implementation
 
 constructor TProfessor.Create(aCodigo: Integer; aNome, aCPF: string);
 begin
-  inherited Create; // Chama o construtor da classe base.
+  inherited Create;
   FCodigo := aCodigo;
   FNome := aNome;
   FCPF := aCPF;
@@ -59,7 +62,6 @@ end;
 
 function TProfessor.ToString: string;
 begin
-  // Formata o resultado para uma string amigável, facilitando a exibição.
   Result := Format('Código: %d - Nome: %s - CPF: %s', [FCodigo, FNome, FCPF]);
 end;
 
@@ -70,14 +72,13 @@ end;
 constructor TProfessorControlador.Create;
 begin
   inherited Create;
-  // Inicializa a lista de objetos e o nome do arquivo. O parâmetro "True" garante que os objetos da lista serão destruídos automaticamente.
   FLista := TObjectList<TProfessor>.Create(True);
   FArquivo := 'professores.txt';
 end;
 
 destructor TProfessorControlador.Destroy;
 begin
-  FLista.Free; // Libera a memória alocada para a lista e os objetos TProfessor.
+  FLista.Free;
   inherited Destroy;
 end;
 
@@ -85,13 +86,12 @@ function TProfessorControlador.BuscarIndice(aCodigo: Integer): Integer;
 var
   i: Integer;
 begin
-  Result := -1; // Inicializa o resultado como -1 (não encontrado).
-  // Itera sobre a lista para encontrar o índice do professor com o código especificado.
+  Result := -1;
   for i := 0 to FLista.Count - 1 do
   begin
     if FLista[i].Codigo = aCodigo then
     begin
-      Result := i; // Retorna o índice se encontrar.
+      Result := i;
       Break;
     end;
   end;
@@ -103,13 +103,12 @@ var
   maiorCodigo: Integer;
 begin
   maiorCodigo := 0;
-  // Itera sobre a lista para encontrar o maior código existente.
   for i := 0 to FLista.Count - 1 do
   begin
     if FLista[i].Codigo > maiorCodigo then
       maiorCodigo := FLista[i].Codigo;
   end;
-  Result := maiorCodigo + 1; // O próximo código é o maior encontrado mais 1.
+  Result := maiorCodigo + 1;
 end;
 
 function TProfessorControlador.ExisteNome(const aNome: string): Boolean;
@@ -117,7 +116,6 @@ var
   i: Integer;
 begin
   Result := False;
-  // Itera sobre a lista para verificar se o nome já existe (ignorando maiúsculas/minúsculas).
   for i := 0 to FLista.Count - 1 do
   begin
     if SameText(FLista[i].Nome, aNome) then
@@ -133,7 +131,6 @@ var
   i: Integer;
 begin
   Result := False;
-  // Itera sobre a lista para verificar se o CPF já existe.
   for i := 0 to FLista.Count - 1 do
   begin
     if FLista[i].CPF = aCPF then
@@ -147,26 +144,20 @@ end;
 function TProfessorControlador.Incluir(aCodigo: Integer; const aNome, aCPF: string): Boolean;
 begin
   Result := False;
-  // Lança exceção se o código já existir.
   if BuscarIndice(aCodigo) <> -1 then
     raise Exception.Create('Código de professor já existe');
-  // Lança exceção se o nome for vazio.
   if Trim(aNome) = '' then
     raise Exception.Create('Nome do professor não pode estar vazio');
-  // Lança exceção se o CPF for vazio.
   if Trim(aCPF) = '' then
     raise Exception.Create('CPF do professor não pode estar vazio');
-  // Lança exceção se o nome já existir.
   if ExisteNome(aNome) then
     raise Exception.Create('Já existe um professor com este nome');
-  // Lança exceção se o CPF já existir.
   if ExisteCPF(aCPF) then
     raise Exception.Create('Já existe um professor com este CPF');
 
   try
-    // Cria um novo objeto TProfessor e o adiciona à lista.
     FLista.Add(TProfessor.Create(aCodigo, aNome, aCPF));
-    SalvarDados; // Salva as alterações no arquivo.
+    SalvarDados;
     Result := True;
   except
     on E: Exception do
@@ -181,24 +172,18 @@ var
 begin
   Result := False;
   indice := BuscarIndice(aCodigo);
-
-  // Lança exceção se o professor não for encontrado.
   if indice < 0 then
     raise Exception.Create('Professor não encontrado');
-  // Lança exceção se o novo nome for vazio.
   if Trim(aNome) = '' then
     raise Exception.Create('Nome do professor não pode estar vazio');
-  // Lança exceção se o novo CPF for vazio.
   if Trim(aCPF) = '' then
     raise Exception.Create('CPF do professor não pode estar vazio');
 
-  // Itera para verificar se o novo nome já existe em outro professor.
   for i := 0 to FLista.Count - 1 do
   begin
     if (i <> indice) and SameText(FLista[i].Nome, aNome) then
       raise Exception.Create('Já existe outro professor com este nome');
   end;
-  // Itera para verificar se o novo CPF já existe em outro professor.
   for i := 0 to FLista.Count - 1 do
   begin
     if (i <> indice) and (FLista[i].CPF = aCPF) then
@@ -206,9 +191,9 @@ begin
   end;
 
   try
-    FLista[indice].Nome := aNome; // Atualiza o nome do professor.
-    FLista[indice].CPF := aCPF; // Atualiza o CPF do professor.
-    SalvarDados; // Salva as alterações no arquivo.
+    FLista[indice].Nome := aNome;
+    FLista[indice].CPF := aCPF;
+    SalvarDados;
     Result := True;
   except
     on E: Exception do
@@ -222,12 +207,11 @@ var
 begin
   Result := False;
   indice := BuscarIndice(aCodigo);
-  // Se o professor for encontrado, o exclui.
   if indice >= 0 then
   begin
     try
-      FLista.Delete(indice); // Exclui o professor da lista (libera a memória automaticamente).
-      SalvarDados; // Salva as alterações no arquivo.
+      FLista.Delete(indice);
+      SalvarDados;
       Result := True;
     except
       on E: Exception do
@@ -242,7 +226,6 @@ var
 begin
   Result := nil;
   indice := BuscarIndice(aCodigo);
-  // Retorna o objeto TProfessor se ele for encontrado na lista.
   if indice >= 0 then
     Result := FLista[indice];
 end;
@@ -252,7 +235,6 @@ var
   professor: TProfessor;
 begin
   AStringList.Clear;
-  // Itera sobre a lista de professores e adiciona a representação em string de cada um ao AStringList.
   for professor in FLista do
     AStringList.Add(professor.ToString);
 end;
@@ -265,16 +247,12 @@ var
   tamanhoNome, tamanhoCPF: Integer;
   nome, cpf: string;
 begin
-  // Sai se o arquivo de dados não existir.
   if not FileExists(FArquivo) then Exit;
-  // Cria um TFileStream para ler o arquivo.
   F := TFileStream.Create(FArquivo, fmOpenRead);
   try
-    FLista.Clear; // Limpa a lista atual antes de carregar os novos dados.
-    // Lê o arquivo sequencialmente enquanto houver dados.
+    FLista.Clear;
     while F.Position < F.Size do
     begin
-      // Lê o código, o tamanho do nome e o nome, o tamanho do CPF e o CPF.
       F.Read(codigo, SizeOf(Integer));
       F.Read(tamanhoNome, SizeOf(Integer));
       SetLength(nome, tamanhoNome);
@@ -282,12 +260,11 @@ begin
       F.Read(tamanhoCPF, SizeOf(Integer));
       SetLength(cpf, tamanhoCPF);
       F.Read(cpf[1], tamanhoCPF);
-      // Cria um novo objeto TProfessor com os dados lidos e o adiciona à lista.
       professor := TProfessor.Create(codigo, nome, cpf);
       FLista.Add(professor);
     end;
   finally
-    F.Free; // Garante que o FileStream seja liberado.
+    F.Free;
   end;
 end;
 
@@ -297,25 +274,30 @@ var
   professor: TProfessor;
   tamanhoNome, tamanhoCPF: Integer;
 begin
-  // Cria um TFileStream para escrever no arquivo, substituindo o conteúdo existente.
   F := TFileStream.Create(FArquivo, fmCreate);
   try
-    // Itera sobre a lista de professores e escreve os dados de cada um no arquivo.
     for professor in FLista do
     begin
-      // Escreve o código, o tamanho do nome e o nome.
       F.Write(professor.Codigo, SizeOf(Integer));
       tamanhoNome := Length(professor.Nome);
       F.Write(tamanhoNome, SizeOf(Integer));
       F.Write(professor.Nome[1], tamanhoNome);
-      // Escreve o tamanho do CPF e o CPF.
       tamanhoCPF := Length(professor.CPF);
       F.Write(tamanhoCPF, SizeOf(Integer));
       F.Write(professor.CPF[1], tamanhoCPF);
     end;
   finally
-    F.Free; // Garante que o FileStream seja liberado.
+    F.Free;
   end;
+end;
+
+// --------------------------------------------------------------------------------------------------
+// Novo método: ObterTodos
+// --------------------------------------------------------------------------------------------------
+
+function TProfessorControlador.ObterTodos: TObjectList<TProfessor>;
+begin
+  Result := FLista;
 end;
 
 end.

@@ -199,49 +199,47 @@ begin
     AStringList.Add(estudante.ToString);
 end;
 
-procedure TEstudanteControlador.CarregarDados;
+procedure TEstudanteControlador.SalvarDados;
 var
-  F: TFileStream;
+  txt: TextFile;
   estudante: TEstudante;
-  i, codigo: Integer;
-  tamanhoNome: Integer;
-  nome: string;
 begin
-  if not FileExists(FArquivo) then Exit;
-  F := TFileStream.Create(FArquivo, fmOpenRead);
+  AssignFile(txt, FArquivo);
   try
-    FLista.Clear;
-    while F.Position < F.Size do
+    Rewrite(txt); // Abrir o arquivo para escrever
+    for estudante in FLista do
     begin
-      F.Read(codigo, SizeOf(Integer));
-      F.Read(tamanhoNome, SizeOf(Integer));
-      SetLength(nome, tamanhoNome);
-      F.Read(nome[1], tamanhoNome);
-      estudante := TEstudante.Create(codigo, nome);
-      FLista.Add(estudante);
+      WriteLn(txt, Format('%d;%s', [estudante.Codigo, estudante.Nome]));
     end;
   finally
-    F.Free;
+    CloseFile(txt);
   end;
 end;
 
-procedure TEstudanteControlador.SalvarDados;
+procedure TEstudanteControlador.CarregarDados;
 var
-  F: TFileStream;
-  estudante: TEstudante;
-  tamanhoNome: Integer;
+  txt: TextFile;
+  linha: string;
+  codigo: Integer;
+  nome: string;
 begin
-  F := TFileStream.Create(FArquivo, fmCreate);
+  if not FileExists(FArquivo) then Exit;
+  AssignFile(txt, FArquivo);
+  Reset(txt); // Abrir o arquivo para ler
   try
-    for estudante in FLista do
+    FLista.Clear;
+    while not Eof(txt) do
     begin
-      F.Write(estudante.Codigo, SizeOf(Integer));
-      tamanhoNome := Length(estudante.Nome);
-      F.Write(tamanhoNome, SizeOf(Integer));
-      F.Write(estudante.Nome[1], tamanhoNome);
+      ReadLn(txt, linha);
+      if Pos(';', linha) > 0 then
+      begin
+        codigo := StrToInt(Copy(linha, 1, Pos(';', linha) - 1));
+        nome := Copy(linha, Pos(';', linha) + 1, Length(linha));
+        FLista.Add(TEstudante.Create(codigo, nome));
+      end;
     end;
   finally
-    F.Free;
+    CloseFile(txt);
   end;
 end;
 

@@ -201,47 +201,49 @@ end;
 
 procedure TDisciplinaControlador.CarregarDados;
 var
-  F: TFileStream;
-  disciplina: TDisciplina;
-  i, codigo: Integer;
-  tamanhoNome: Integer;
+  txt: TextFile;
+  linha: string;
+  partes: TArray<string>;
+  codigo: Integer;
   nome: string;
 begin
   if not FileExists(FArquivo) then Exit;
-  F := TFileStream.Create(FArquivo, fmOpenRead);
+  AssignFile(txt, FArquivo);
+  Reset(txt); // Abrir o arquivo para ler
   try
     FLista.Clear;
-    while F.Position < F.Size do
+    while not Eof(txt) do
     begin
-      F.Read(codigo, SizeOf(Integer));
-      F.Read(tamanhoNome, SizeOf(Integer));
-      SetLength(nome, tamanhoNome);
-      F.Read(nome[1], tamanhoNome);
-      disciplina := TDisciplina.Create(codigo, nome);
-      FLista.Add(disciplina);
+      ReadLn(txt, linha);
+      partes := linha.Split([';']); // cada ; é um split de array, tipo ['1';'matematica']
+      if Length(partes) >= 2 then
+      begin
+        if TryStrToInt(partes[0], codigo) then
+        begin
+          nome := partes[1];  // nome é partes[1], código é partes[0]
+          FLista.Add(TDisciplina.Create(codigo, nome));
+        end;
+      end;
     end;
   finally
-    F.Free;
+    CloseFile(txt);
   end;
 end;
 
 procedure TDisciplinaControlador.SalvarDados;
 var
-  F: TFileStream;
+  txt: TextFile;
   disciplina: TDisciplina;
-  tamanhoNome: Integer;
 begin
-  F := TFileStream.Create(FArquivo, fmCreate);
+  AssignFile(txt, FArquivo);
+  Rewrite(txt); // Abrir o arquivo para escrever
   try
     for disciplina in FLista do
     begin
-      F.Write(disciplina.Codigo, SizeOf(Integer));
-      tamanhoNome := Length(disciplina.Nome);
-      F.Write(tamanhoNome, SizeOf(Integer));
-      F.Write(disciplina.Nome[1], tamanhoNome);
+      WriteLn(txt, Format('%d;%s', [disciplina.Codigo, disciplina.Nome]));
     end;
   finally
-    F.Free;
+    CloseFile(txt);
   end;
 end;
 

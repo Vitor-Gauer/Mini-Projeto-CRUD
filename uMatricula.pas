@@ -255,44 +255,47 @@ begin
   end;
 end;
 
-procedure TMatriculaControlador.CarregarDados;
+procedure TMatriculaControlador.SalvarDados;
 var
-  F: TFileStream;
+  txt: TextFile;
   matricula: TMatricula;
-  codigo, codigoTurma, codigoEstudante: Integer;
 begin
-  if not FileExists(FArquivo) then Exit;
-  F := TFileStream.Create(FArquivo, fmOpenRead);
+  AssignFile(txt, FArquivo);
   try
-    FLista.Clear;
-    while F.Position < F.Size do
+    Rewrite(txt); // Abrir o arquivo para escrever
+    for matricula in FLista do
     begin
-      F.Read(codigo, SizeOf(Integer));
-      F.Read(codigoTurma, SizeOf(Integer));
-      F.Read(codigoEstudante, SizeOf(Integer));
-      matricula := TMatricula.Create(codigo, codigoTurma, codigoEstudante);
-      FLista.Add(matricula);
+      WriteLn(txt, Format('%d;%d;%d', [matricula.Codigo, matricula.CodigoTurma, matricula.CodigoEstudante]));
     end;
   finally
-    F.Free;
+    CloseFile(txt);
   end;
 end;
 
-procedure TMatriculaControlador.SalvarDados;
+procedure TMatriculaControlador.CarregarDados;
 var
-  F: TFileStream;
-  matricula: TMatricula;
+  txt: TextFile;
+  linha: string;
+  codigo, codigoTurma, codigoEstudante: Integer;
 begin
-  F := TFileStream.Create(FArquivo, fmCreate);
+  if not FileExists(FArquivo) then Exit;
+  AssignFile(txt, FArquivo);
+  Reset(txt); // Abrir o arquivo para ler
   try
-    for matricula in FLista do
+    FLista.Clear;
+    while not Eof(txt) do
     begin
-      F.Write(matricula.Codigo, SizeOf(Integer));
-      F.Write(matricula.CodigoTurma, SizeOf(Integer));
-      F.Write(matricula.CodigoEstudante, SizeOf(Integer));
+      ReadLn(txt, linha);
+      if Pos(';', linha) > 0 then
+      begin
+        codigo := StrToInt(Copy(linha, 1, Pos(';', linha) - 1));
+        codigoTurma := StrToInt(Copy(linha, Pos(';', linha) + 1, Pos(';', linha, Pos(';', linha) + 1) - Pos(';', linha) - 1));
+        codigoEstudante := StrToInt(Copy(linha, Pos(';', linha, Pos(';', linha) + 1) + 1, Length(linha)));
+        FLista.Add(TMatricula.Create(codigo, codigoTurma, codigoEstudante));
+      end;
     end;
   finally
-    F.Free;
+    CloseFile(txt);
   end;
 end;
 

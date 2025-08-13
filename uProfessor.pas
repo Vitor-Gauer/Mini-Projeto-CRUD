@@ -239,55 +239,48 @@ begin
     AStringList.Add(professor.ToString);
 end;
 
-procedure TProfessorControlador.CarregarDados;
+procedure TProfessorControlador.SalvarDados;
 var
-  F: TFileStream;
+  txt: TextFile;
   professor: TProfessor;
-  i, codigo: Integer;
-  tamanhoNome, tamanhoCPF: Integer;
-  nome, cpf: string;
 begin
-  if not FileExists(FArquivo) then Exit;
-  F := TFileStream.Create(FArquivo, fmOpenRead);
+  AssignFile(txt, FArquivo);
   try
-    FLista.Clear;
-    while F.Position < F.Size do
+    Rewrite(txt); // Open file for writing
+    for professor in FLista do
     begin
-      F.Read(codigo, SizeOf(Integer));
-      F.Read(tamanhoNome, SizeOf(Integer));
-      SetLength(nome, tamanhoNome);
-      F.Read(nome[1], tamanhoNome);
-      F.Read(tamanhoCPF, SizeOf(Integer));
-      SetLength(cpf, tamanhoCPF);
-      F.Read(cpf[1], tamanhoCPF);
-      professor := TProfessor.Create(codigo, nome, cpf);
-      FLista.Add(professor);
+      WriteLn(txt, Format('%d;%s;%s', [professor.Codigo, professor.Nome, professor.CPF]));
     end;
   finally
-    F.Free;
+    CloseFile(txt);
   end;
 end;
 
-procedure TProfessorControlador.SalvarDados;
+procedure TProfessorControlador.CarregarDados;
 var
-  F: TFileStream;
-  professor: TProfessor;
-  tamanhoNome, tamanhoCPF: Integer;
+  txt: TextFile;
+  linha: string;
+  codigo: Integer;
+  nome, cpf: string;
 begin
-  F := TFileStream.Create(FArquivo, fmCreate);
+  if not FileExists(FArquivo) then Exit;
+  AssignFile(txt, FArquivo);
+  Reset(txt); // Open file for reading
   try
-    for professor in FLista do
+    FLista.Clear;
+    while not Eof(txt) do
     begin
-      F.Write(professor.Codigo, SizeOf(Integer));
-      tamanhoNome := Length(professor.Nome);
-      F.Write(tamanhoNome, SizeOf(Integer));
-      F.Write(professor.Nome[1], tamanhoNome);
-      tamanhoCPF := Length(professor.CPF);
-      F.Write(tamanhoCPF, SizeOf(Integer));
-      F.Write(professor.CPF[1], tamanhoCPF);
+      ReadLn(txt, linha);
+      if Pos(';', linha) > 0 then
+      begin
+        codigo := StrToInt(Copy(linha, 1, Pos(';', linha) - 1));
+        nome := Copy(linha, Pos(';', linha) + 1, Pos(';', linha, Pos(';', linha) + 1) - Pos(';', linha) - 1);
+        cpf := Copy(linha, Pos(';', linha, Pos(';', linha) + 1) + 1, Length(linha));
+        FLista.Add(TProfessor.Create(codigo, nome, cpf));
+      end;
     end;
   finally
-    F.Free;
+    CloseFile(txt);
   end;
 end;
 

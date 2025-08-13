@@ -245,44 +245,47 @@ begin
   end;
 end;
 
-procedure TTurmaControlador.CarregarDados;
+procedure TTurmaControlador.SalvarDados;
 var
-  F: TFileStream;
+  txt: TextFile;
   turma: TTurma;
-  codigo, codigoProfessor, codigoDisciplina: Integer;
 begin
-  if not FileExists(FArquivo) then Exit;
-  F := TFileStream.Create(FArquivo, fmOpenRead);
+  AssignFile(txt, FArquivo);
   try
-    FLista.Clear;
-    while F.Position < F.Size do
+    Rewrite(txt); // Abrir o arquivo para escrever
+    for turma in FLista do
     begin
-      F.Read(codigo, SizeOf(Integer));
-      F.Read(codigoProfessor, SizeOf(Integer));
-      F.Read(codigoDisciplina, SizeOf(Integer));
-      turma := TTurma.Create(codigo, codigoProfessor, codigoDisciplina);
-      FLista.Add(turma);
+      WriteLn(txt, Format('%d;%d;%d', [turma.Codigo, turma.CodigoProfessor, turma.CodigoDisciplina]));
     end;
   finally
-    F.Free;
+    CloseFile(txt);
   end;
 end;
 
-procedure TTurmaControlador.SalvarDados;
+procedure TTurmaControlador.CarregarDados;
 var
-  F: TFileStream;
-  turma: TTurma;
+  txt: TextFile;
+  linha: string;
+  codigo, codigoProfessor, codigoDisciplina: Integer;
 begin
-  F := TFileStream.Create(FArquivo, fmCreate);
+  if not FileExists(FArquivo) then Exit;
+  AssignFile(txt, FArquivo);
+  Reset(txt); // Abrir o arquivo para ler
   try
-    for turma in FLista do
+    FLista.Clear;
+    while not Eof(txt) do
     begin
-      F.Write(turma.Codigo, SizeOf(Integer));
-      F.Write(turma.CodigoProfessor, SizeOf(Integer));
-      F.Write(turma.CodigoDisciplina, SizeOf(Integer));
+      ReadLn(txt, linha);
+      if Pos(';', linha) > 0 then
+      begin
+        codigo := StrToInt(Copy(linha, 1, Pos(';', linha) - 1));
+        codigoProfessor := StrToInt(Copy(linha, Pos(';', linha) + 1, Pos(';', linha, Pos(';', linha) + 1) - Pos(';', linha) - 1));
+        codigoDisciplina := StrToInt(Copy(linha, Pos(';', linha, Pos(';', linha) + 1) + 1, Length(linha)));
+        FLista.Add(TTurma.Create(codigo, codigoProfessor, codigoDisciplina));
+      end;
     end;
   finally
-    F.Free;
+    CloseFile(txt);
   end;
 end;
 

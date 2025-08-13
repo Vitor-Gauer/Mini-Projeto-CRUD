@@ -3,8 +3,8 @@ object FLocalLogin: TFLocalLogin
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Login - Sistema Acad'#234'mico'
-  ClientHeight = 195
-  ClientWidth = 305
+  ClientHeight = 180
+  ClientWidth = 282
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FLocalLogin: TFLocalLogin
     AlignWithMargins = True
     Left = 3
     Top = 15
-    Width = 299
+    Width = 276
     Height = 19
     Margins.Top = 15
     Align = alTop
@@ -78,15 +78,5 @@ object FLocalLogin: TFLocalLogin
     Caption = 'Cancelar'
     TabOrder = 3
     OnClick = btnCancelarClick
-  end
-  object btnCadastroUsuarios: TButton
-    Left = 72
-    Top = 163
-    Width = 150
-    Height = 25
-    Caption = 'Gerenciar Usu'#225'rios'
-    TabOrder = 4
-    Visible = False
-    OnClick = btnCadastroUsuariosClick
   end
 end

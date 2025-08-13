@@ -282,12 +282,13 @@ begin
     FTurmaControlador.CarregarDados;
     FMatriculaControlador.CarregarDados;
 
-    // Atualiza as listas INICIALMENTE
+    // --- Atualiza as listas INICIALMENTE usando os novos procedimentos ---
     AtualizarListaEstudantes;
     AtualizarListaProfessores;
     AtualizarListaDisciplinas;
     AtualizarListaTurmas;
     AtualizarListaMatriculas;
+    // ---------------------------------------------------------------------
 
     // Configura permissões com base no nível de acesso
     AtualizarPermissoes;
@@ -297,7 +298,6 @@ begin
   end;
 end;
 
-    // Quando o formulário for fechado, se tiver algo para salvar, salve e tire da memória
 procedure TFSistemaAcademico.FormDestroy(Sender: TObject);
 begin
   try
@@ -334,11 +334,8 @@ end;
 
 
 // --------------------------------------------------------------------------------------------------
-// Métodos para Atualizar Listas
-//
-// Atualizar: Estudantes
+// Novos Métodos para Atualizar Listas
 // --------------------------------------------------------------------------------------------------
-
 
 procedure TFSistemaAcademico.AtualizarListaEstudantes;
 begin
@@ -350,10 +347,6 @@ begin
   end;
 end;
 
-// --------------------------------------------------------------------------------------------------
-// Atualizar: Professores
-// --------------------------------------------------------------------------------------------------
-
 procedure TFSistemaAcademico.AtualizarListaProfessores;
 begin
   try
@@ -363,10 +356,6 @@ begin
       ShowMessage('Erro ao atualizar lista de professores: ' + E.Message);
   end;
 end;
-
-// --------------------------------------------------------------------------------------------------
-// Atualizar: Dsiciplinas
-// --------------------------------------------------------------------------------------------------
 
 procedure TFSistemaAcademico.AtualizarListaDisciplinas;
 begin
@@ -378,14 +367,10 @@ begin
   end;
 end;
 
-// --------------------------------------------------------------------------------------------------
-// Atualizar: Turmas
-// --------------------------------------------------------------------------------------------------
-
 procedure TFSistemaAcademico.AtualizarListaTurmas;
 begin
   try
-    // Passa os controladores de Professor e Disciplina para obter os nomes na listbox
+    // Passa os controladores de Professor e Disciplina para obter os nomes
     FTurmaControlador.Listar(lbxTurmas.Items, FProfessorControlador, FDisciplinaControlador);
   except
     on E: Exception do
@@ -393,14 +378,10 @@ begin
   end;
 end;
 
-// --------------------------------------------------------------------------------------------------
-// Atualizar: Mátriculas
-// --------------------------------------------------------------------------------------------------
-
 procedure TFSistemaAcademico.AtualizarListaMatriculas;
 begin
   try
-    // Passa todos os controladores necessários para obter os nomes na listbox
+    // Passa todos os controladores necessários para obter os nomes
     FMatriculaControlador.Listar(lbxMatriculas.Items, FTurmaControlador, FEstudanteControlador, FProfessorControlador, FDisciplinaControlador);
   except
     on E: Exception do
@@ -412,8 +393,6 @@ end;
 // --------------------------------------------------------------------------------------------------
 // Controle de Permissões por Nível de Acesso
 // --------------------------------------------------------------------------------------------------
-
-
 procedure TFSistemaAcademico.AtualizarPermissoes;
 begin
   case FNivelAcesso of
@@ -457,52 +436,29 @@ end;
 
 
 // --------------------------------------------------------------------------------------------------
-// Indexação para a Geração de Relatórios
-//
-// Relatório: Estudante/Turma
+// Geração de Relatórios
 // --------------------------------------------------------------------------------------------------
-
-
 procedure TFSistemaAcademico.btnRelatorioEstudantesClick(Sender: TObject);
 begin
   GerarRelatorioEstudantesPorTurma;
 end;
-
-// --------------------------------------------------------------------------------------------------
-// Relatório: Professores/Disciplina
-// --------------------------------------------------------------------------------------------------
 
 procedure TFSistemaAcademico.btnRelatorioProfessoresClick(Sender: TObject);
 begin
   GerarRelatorioProfessoresPorDisciplina;
 end;
 
-// --------------------------------------------------------------------------------------------------
-// Relatório: Disciplinas
-// --------------------------------------------------------------------------------------------------
-
 procedure TFSistemaAcademico.btnRelatorioDisciplinasClick(Sender: TObject);
 begin
   GerarRelatorioDisciplinasOfertadas;
 end;
-
-// --------------------------------------------------------------------------------------------------
-// Relatório: Matrículas/Estudante
-// --------------------------------------------------------------------------------------------------
 
 procedure TFSistemaAcademico.btnRelatorioMatriculasClick(Sender: TObject);
 begin
   GerarRelatorioMatriculasPorEstudante;
 end;
 
-
-// --------------------------------------------------------------------------------------------------
-// Procedimentos para Geração de Relatórios
-//
-// Relatório: Estudantes/Turma
-// --------------------------------------------------------------------------------------------------
-
-
+// Relatório: Lista de Estudantes por Turma
 procedure TFSistemaAcademico.GerarRelatorioEstudantesPorTurma;
 var
   Stream: TStringList;
@@ -540,10 +496,7 @@ begin
   end;
 end;
 
-// --------------------------------------------------------------------------------------------------
-// Relatório: Professores/Disicplina
-// --------------------------------------------------------------------------------------------------
-
+// Relatório: Professores por Disciplina
 procedure TFSistemaAcademico.GerarRelatorioProfessoresPorDisciplina;
 var
   Stream: TStringList;
